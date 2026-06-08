@@ -1,29 +1,53 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect } from "react";
+import { LeadModalProvider } from "@/components/lead/LeadModalContext";
+import { Navbar } from "@/components/Navbar";
+import { Hero } from "@/components/Hero";
+import { TrustBar } from "@/components/TrustBar";
+import { PortfolioSection } from "@/components/PortfolioSection";
+import { RecommendationSection } from "@/components/RecommendationSection";
+import { ProcessSection } from "@/components/ProcessSection";
+import { WhyUs } from "@/components/WhyUs";
+import { Testimonials } from "@/components/Testimonials";
+import { Manifesto } from "@/components/Manifesto";
+import { CTASection } from "@/components/CTASection";
+import { Footer } from "@/components/Footer";
+import { LeadModal } from "@/components/LeadModal";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Your App" },
-      { name: "description", content: "Replace this with a one-sentence description of your app." },
-      { property: "og:title", content: "Your App" },
-      { property: "og:description", content: "Replace this with a one-sentence description of your app." },
+      { title: "ShriNivesh — See Our 2025–2030 Fund Picks Free" },
+      { name: "description", content: "SEBI Registered Research Analyst reveals 3 mutual funds for 2025–2030 wealth creation. Model portfolio: ₹10K/month SIP grew ₹6L to ₹11.4L in 5 years." },
+      { property: "og:title", content: "ShriNivesh — See Our 2025–2030 Fund Picks Free" },
+      { property: "og:description", content: "SEBI Registered Research Analyst reveals 3 mutual funds for 2025–2030 wealth creation." },
+      { property: "og:url", content: "/" },
     ],
+    links: [{ rel: "canonical", href: "/" }],
   }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
+  useEffect(() => {
+    document.body.classList.add("shrinivesh");
+    return () => { document.body.classList.remove("shrinivesh"); };
+  }, []);
+
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <LeadModalProvider>
+      <Navbar />
+      <Hero />
+      <TrustBar />
+      <PortfolioSection />
+      <RecommendationSection />
+      <ProcessSection />
+      <WhyUs />
+      <Testimonials />
+      <Manifesto />
+      <CTASection />
+      <Footer />
+      <LeadModal />
+    </LeadModalProvider>
   );
 }
