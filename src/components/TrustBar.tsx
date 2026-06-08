@@ -1,7 +1,7 @@
 export function TrustBar() {
   const items = [
     { i: "🏛️", t: "NSE Invest Empanelled" },
-    { i: "🔬", t: "SEBI Registered Research Analyst" },
+    { i: "🔬", t: "NISM Certified" },
     { i: "📜", t: "AMFI Registered MFD" },
     { i: "🔒", t: "KYC-First. Advice-Always." },
     { i: "🌾", t: "Rooted in Odisha · Pan-India" },

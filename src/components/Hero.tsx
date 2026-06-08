@@ -22,15 +22,15 @@ export function Hero() {
         </div>
         <div className="hero-stats">
           <div className="stat-item">
-            <span className="stat-num">₹<span>11.4L</span></span>
+            <span className="stat-num"><span className="pv green">₹11.4L</span></span>
             <span className="stat-label">From ₹6L Invested</span>
           </div>
           <div className="stat-item">
-            <span className="stat-num">19<span>.8%</span></span>
+            <span className="stat-num"><span className="pv green">19.8%</span></span>
             <span className="stat-label">Portfolio XIRR</span>
           </div>
           <div className="stat-item">
-            <span className="stat-num">+<span>5.6%</span></span>
+            <span className="stat-num"><span >+5.6%</span></span>
             <span className="stat-label">Alpha vs Nifty 50</span>
           </div>
         </div>

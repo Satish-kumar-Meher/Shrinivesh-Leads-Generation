@@ -266,8 +266,8 @@ nav {
   color: var(--dark);
   animation: fadeUp 0.9s 0.1s ease both;
 }
-.hero-headline em { font-style: italic; color: var(--green); display: block; }
-.hero-headline .accent { color: var(--orange); }
+.hero-headline em { font-style: normal; color: var(--green); display: block; }
+.hero-headline .accent { color: var(--dark); }
 
 .hero-sub {
   font-family: 'Cormorant Garamond', serif;
