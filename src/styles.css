@@ -829,6 +829,7 @@ footer {
   background: #080f07;
   padding: 56px 80px 28px;
   color: rgba(250,247,242,0.45);
+  font-family: 'IBM Plex Mono', monospace;
 }
 .footer-top {
   display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
@@ -836,7 +837,7 @@ footer {
 }
 .footer-brand p { font-size: 12.5px; line-height: 1.85; }
 .footer-brand-name {
-  font-family: 'Playfair Display', serif;
+  font-family: 'IBM Plex Mono', serif;
   font-size: 20px; font-weight: 700; color: rgba(250,247,242,0.8);
   margin-bottom: 12px;
 }
@@ -872,6 +873,7 @@ footer {
 .modal-box {
   background: var(--cream); border-radius: 20px;
   padding: 44px; max-width: 520px; width: 100%;
+  max-height: 90vh; overflow-y: auto;
   position: relative; animation: slideUp 0.3s ease;
   box-shadow: 0 40px 80px rgba(13,26,11,0.25);
 }

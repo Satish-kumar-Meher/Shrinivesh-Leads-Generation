@@ -3,7 +3,7 @@ export function TrustBar() {
     { i: "🏛️", t: "NSE Invest Empanelled" },
     { i: "🔬", t: "NISM Certified" },
     { i: "📜", t: "AMFI Registered MFD" },
-    { i: "🔒", t: "KYC-First. Advice-Always." },
+    { i: "🔒", t: "Free Portfolio Consultation" },
     { i: "🌾", t: "Rooted in Odisha · Pan-India" },
   ];
   return (

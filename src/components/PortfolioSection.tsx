@@ -8,9 +8,36 @@ const BARS = [
 ];
 
 const FUNDS = [
-  { l: "Fund 1 · Flexi Cap", n: "Diversified Growth Pick", tags: [["PE at entry", "21.3x"], ["Expense", "0.69%"], ["Manager tenure", "11+ yrs"]], x: "18.4%" },
-  { l: "Fund 2 · Mid Cap", n: "Mid-Market Compounder", tags: [["PE at entry", "24.6x"], ["Expense", "0.82%"], ["Manager tenure", "8+ yrs"]], x: "22.1%" },
-  { l: "Fund 3 · Small Cap", n: "High-Conviction Frontier", tags: [["PE at entry", "19.8x"], ["Expense", "0.94%"], ["Turnover", "<20%"]], x: "27.8%" },
+  {
+    l: "Fund 1 · Flexi Cap",
+    n: "Diversified Growth Pick",
+    tags: [
+      ["PE at entry", "21.3x"],
+      ["Expense", "0.69%"],
+      ["Manager tenure", "11+ yrs"],
+    ],
+    x: "18.4%",
+  },
+  {
+    l: "Fund 2 · Mid Cap",
+    n: "Mid-Market Compounder",
+    tags: [
+      ["PE at entry", "24.6x"],
+      ["Expense", "0.82%"],
+      ["Manager tenure", "8+ yrs"],
+    ],
+    x: "22.1%",
+  },
+  {
+    l: "Fund 3 · Small Cap",
+    n: "High-Conviction Frontier",
+    tags: [
+      ["PE at entry", "19.8x"],
+      ["Expense", "0.94%"],
+      ["Turnover", "<20%"],
+    ],
+    x: "27.8%",
+  },
 ];
 
 export function PortfolioSection() {
@@ -18,31 +45,50 @@ export function PortfolioSection() {
     <section className="portfolio-section" id="portfolio">
       <div className="section-tag reveal-on-scroll visible">The Numbers</div>
       <h2 className="section-title reveal-on-scroll visible">
-        ₹10K/month. 5 years.<br />3 funds. <em>Here's the breakdown.</em>
+        ₹10K/month. 5 years.
+        <br />3 funds. <em>Here's the breakdown.</em>
       </h2>
       <p className="section-lead reveal-on-scroll visible">
-        Built on publicly available NAV data. Every fund chosen by a documented research process — not hype, not NFO pressure, not distributor incentives.
+        Built on publicly available NAV data. Every fund chosen by a documented research process —
+        not hype, not NFO pressure, not distributor incentives.
       </p>
 
       <div className="portfolio-grid" style={{ marginTop: 56 }}>
         <div className="chart-block reveal-on-scroll visible">
           <div className="chart-title">Annual Returns: Model Portfolio vs Nifty 50 TRI</div>
-          <div className="chart-sub">Illustrative · Based on public NAV data · Not client returns</div>
+          <div className="chart-sub">
+            Illustrative · Based on public NAV data · Not client returns
+          </div>
           <div className="chart-legend">
-            <div className="leg-item"><div className="leg-dot p" />Model Portfolio</div>
-            <div className="leg-item"><div className="leg-dot n" />Nifty 50 TRI</div>
+            <div className="leg-item">
+              <div className="leg-dot p" />
+              Model Portfolio
+            </div>
+            <div className="leg-item">
+              <div className="leg-dot n" />
+              Nifty 50 TRI
+            </div>
           </div>
           <div className="bars-wrap">
             {BARS.map((b, i) => (
               <div className="bar-group" key={b.yr}>
                 <div className={`bar-pct${b.neg ? " neg" : ""}`}>{b.pct}</div>
                 <div className="bar-pair">
-                  <div className={`b ${b.neg ? "neg" : "p"}`} style={{ height: `${b.p}%`, animationDelay: `${0.1 + i * 0.1}s` }} />
-                  <div className={`b ${b.neg ? "neg-n" : "n"}`} style={{ height: `${b.n}%`, animationDelay: `${0.3 + i * 0.1}s` }} />
+                  <div
+                    className={`b ${b.neg ? "neg" : "p"}`}
+                    style={{ height: `${b.p}%`, animationDelay: `${0.1 + i * 0.1}s` }}
+                  />
+                  <div
+                    className={`b ${b.neg ? "neg-n" : "n"}`}
+                    style={{ height: `${b.n}%`, animationDelay: `${0.3 + i * 0.1}s` }}
+                  />
                 </div>
                 <div className="bar-lbl">
-                  {b.yr}<br />
-                  <span style={{ color: b.neg ? "rgba(224,123,42,0.6)" : "rgba(255,255,255,0.3)" }}>{b.sub}</span>
+                  {b.yr}
+                  <br />
+                  <span style={{ color: b.neg ? "rgba(224,123,42,0.6)" : "rgba(255,255,255,0.3)" }}>
+                    {b.sub}
+                  </span>
                 </div>
               </div>
             ))}
@@ -58,7 +104,9 @@ export function PortfolioSection() {
                   <div className="fci-name">{f.n}</div>
                   <div className="fci-meta">
                     {f.tags.map(([k, v]) => (
-                      <span className="fci-tag" key={k}>{k}: <strong>{v}</strong></span>
+                      <span className="fci-tag" key={k}>
+                        {k}: <strong>{v}</strong>
+                      </span>
                     ))}
                   </div>
                 </div>
@@ -71,10 +119,22 @@ export function PortfolioSection() {
           </div>
 
           <div className="portfolio-summary reveal-on-scroll visible" style={{ marginTop: 28 }}>
-            <div className="ps-item"><label>Total Invested</label><div className="pv cream">₹6.0 L</div></div>
-            <div className="ps-item"><label>Current Value</label><div className="pv green">₹11.4 L</div></div>
-            <div className="ps-item"><label>Absolute Gain</label><div className="pv orange">₹5.4 L</div></div>
-            <div className="ps-item"><label>Portfolio XIRR</label><div className="pv green">19.8%</div></div>
+            <div className="ps-item">
+              <label>Total Invested</label>
+              <div className="pv cream">₹6.0 L</div>
+            </div>
+            <div className="ps-item">
+              <label>Current Value</label>
+              <div className="pv green">₹11.4 L</div>
+            </div>
+            <div className="ps-item">
+              <label>Absolute Gain</label>
+              <div className="pv orange">₹5.4 L</div>
+            </div>
+            <div className="ps-item">
+              <label>Portfolio XIRR</label>
+              <div className="pv green">19.8%</div>
+            </div>
           </div>
         </div>
       </div>

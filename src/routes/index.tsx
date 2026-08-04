@@ -18,9 +18,17 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "ShriNivesh — See Our 2025–2030 Fund Picks Free" },
-      { name: "description", content: "SEBI Registered Research Analyst reveals 3 mutual funds for 2025–2030 wealth creation. Model portfolio: ₹10K/month SIP grew ₹6L to ₹11.4L in 5 years." },
+      {
+        name: "description",
+        content:
+          "SEBI Registered Research Analyst reveals 3 mutual funds for 2025–2030 wealth creation. Model portfolio: ₹10K/month SIP grew ₹6L to ₹11.4L in 5 years.",
+      },
       { property: "og:title", content: "ShriNivesh — See Our 2025–2030 Fund Picks Free" },
-      { property: "og:description", content: "SEBI Registered Research Analyst reveals 3 mutual funds for 2025–2030 wealth creation." },
+      {
+        property: "og:description",
+        content:
+          "SEBI Registered Research Analyst reveals 3 mutual funds for 2025–2030 wealth creation.",
+      },
       { property: "og:url", content: "/" },
     ],
     links: [{ rel: "canonical", href: "/" }],
@@ -31,7 +39,9 @@ export const Route = createFileRoute("/")({
 function Index() {
   useEffect(() => {
     document.body.classList.add("shrinivesh");
-    return () => { document.body.classList.remove("shrinivesh"); };
+    return () => {
+      document.body.classList.remove("shrinivesh");
+    };
   }, []);
 
   return (
