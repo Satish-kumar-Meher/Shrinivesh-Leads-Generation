@@ -1,4 +1,4 @@
-import { c as createMiddleware } from "./server-Dg7Q6TuF.mjs";
+import { c as createMiddleware, a as createCsrfMiddleware } from "./server-B-afALoD.mjs";
 import { r as renderErrorPage } from "./index.mjs";
 import "../_libs/seroval.mjs";
 import "../_libs/react.mjs";
@@ -42,6 +42,9 @@ var createStart = (getOptions) => {
     createMiddleware
   };
 };
+const csrfMiddleware = createCsrfMiddleware({
+  filter: (ctx) => ctx.handlerType === "serverFn"
+});
 const errorMiddleware = createMiddleware().server(async ({ next }) => {
   try {
     return await next();
@@ -57,7 +60,7 @@ const errorMiddleware = createMiddleware().server(async ({ next }) => {
   }
 });
 const startInstance = createStart(() => ({
-  requestMiddleware: [errorMiddleware]
+  requestMiddleware: [csrfMiddleware, errorMiddleware]
 }));
 export {
   startInstance

@@ -1,8 +1,6 @@
-import { T as TSS_SERVER_FUNCTION, a as createServerFn } from "./server-Dg7Q6TuF.mjs";
+import { T as TSS_SERVER_FUNCTION, b as createServerFn } from "./server-B-afALoD.mjs";
 import { R as Resend } from "../_libs/resend.mjs";
 import { c as createClient } from "../_libs/supabase__supabase-js.mjs";
-import fs from "fs";
-import path from "path";
 import "../_libs/seroval.mjs";
 import "../_libs/react.mjs";
 import { o as objectType, s as stringType, b as booleanType } from "../_libs/zod.mjs";
@@ -44,15 +42,6 @@ var createServerRpc = (serverFnMeta, splitImportFn) => {
   });
 };
 function getEnv(key, fallback = "") {
-  try {
-    const envPath = path.resolve(process.cwd(), ".env");
-    if (fs.existsSync(envPath)) {
-      const envFile = fs.readFileSync(envPath, "utf-8");
-      const match = envFile.match(new RegExp(`^${key}=(.*)$`, "m"));
-      if (match) return match[1].trim();
-    }
-  } catch (e) {
-  }
   return process.env[key] || fallback;
 }
 const supabaseUrl = getEnv("VITE_SUPABASE_URL", "https://placeholder-project.supabase.co");

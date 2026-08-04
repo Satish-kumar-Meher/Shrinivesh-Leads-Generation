@@ -81,7 +81,7 @@ function getResponse() {
 }
 var HEADERS = { TSS_SHELL: "X-TSS_SHELL" };
 async function getStartManifest(matchedRoutes) {
-  const { tsrStartManifest } = await import("../_tanstack-start-manifest_v-A4-HDvZk.mjs");
+  const { tsrStartManifest } = await import("../_tanstack-start-manifest_v-DYZ55kws.mjs");
   const startManifest = tsrStartManifest();
   let routes = startManifest.routes;
   routes[rootRouteId];
@@ -103,19 +103,19 @@ async function getStartManifest(matchedRoutes) {
 const manifest = {
   "2346c51317ba750c0f51204e37e36732bec350fb086a2756d91ce75e1e92b34b": {
     functionName: "updateLeadMeetingStatusFn_createServerFn_handler",
-    importer: () => import("./leads-CrhmGWUJ.mjs")
+    importer: () => import("./leads-BIL2OWid.mjs")
   },
   "58246c96447369cd14bbdb3fc5ccdf09f644412dbd285dd9e86b921189e9988f": {
     functionName: "submitLeadFn_createServerFn_handler",
-    importer: () => import("./leads-CrhmGWUJ.mjs")
+    importer: () => import("./leads-BIL2OWid.mjs")
   },
   "7106cd2d8ff83a816dfba4784a53b72a2abad6b04b9c25062ea19a1121e68d27": {
     functionName: "deleteLeadFn_createServerFn_handler",
-    importer: () => import("./leads-CrhmGWUJ.mjs")
+    importer: () => import("./leads-BIL2OWid.mjs")
   },
   "a3e45626a601ff6747ab859b35ede6c725f5e3da308fde360bba11b6e913c831": {
     functionName: "updateLeadMeetingTimeFn_createServerFn_handler",
-    importer: () => import("./leads-CrhmGWUJ.mjs")
+    importer: () => import("./leads-BIL2OWid.mjs")
   }
 };
 async function getServerFnById(id, access) {
@@ -1355,8 +1355,8 @@ var getBaseManifest = getProdBaseManifest;
 var createEarlyHintsForRequest = createEarlyHintsCollector;
 async function loadEntries() {
   const [routerEntry, startEntry, pluginAdapters] = await Promise.all([
-    import("./router-DtOysBpa.mjs"),
-    import("./start-D1z4a6Y7.mjs"),
+    import("./router-CKXZg2r-.mjs"),
+    import("./start-B9NRHd9T.mjs"),
     import("./empty-plugin-adapters-BFgPZ6_d.mjs")
   ]);
   return {
@@ -1703,7 +1703,8 @@ const server = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProper
 }, Symbol.toStringTag, { value: "Module" }));
 export {
   TSS_SERVER_FUNCTION as T,
-  createServerFn as a,
+  createCsrfMiddleware as a,
+  createServerFn as b,
   createMiddleware as c,
   getServerFnById as g,
   server as s
