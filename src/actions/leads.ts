@@ -2,20 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { Resend } from "resend";
 import { createClient } from "@supabase/supabase-js";
-import fs from "fs";
-import path from "path";
-
 function getEnv(key: string, fallback: string = "") {
-  try {
-    const envPath = path.resolve(process.cwd(), ".env");
-    if (fs.existsSync(envPath)) {
-      const envFile = fs.readFileSync(envPath, "utf-8");
-      const match = envFile.match(new RegExp(`^${key}=(.*)$`, "m"));
-      if (match) return match[1].trim();
-    }
-  } catch (e) {
-    // ignore
-  }
   return process.env[key] || fallback;
 }
 
