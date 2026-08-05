@@ -1,8 +1,9 @@
-import { T as TSS_SERVER_FUNCTION, b as createServerFn } from "./server-B-afALoD.mjs";
+import { T as TSS_SERVER_FUNCTION, a as createServerFn } from "./server-DPMWdDAy.mjs";
 import { R as Resend } from "../_libs/resend.mjs";
-import { c as createClient } from "../_libs/supabase__supabase-js.mjs";
+import { c as createClient } from "./index-BCpTDnyP.mjs";
 import "../_libs/seroval.mjs";
 import "../_libs/react.mjs";
+import "../_libs/supabase__realtime-js.mjs";
 import { o as objectType, s as stringType, b as booleanType } from "../_libs/zod.mjs";
 import "node:async_hooks";
 import "../_libs/h3-v2.mjs";
@@ -26,13 +27,11 @@ import "../_libs/standardwebhooks.mjs";
 import "../_libs/stablelib__base64.mjs";
 import "../_libs/fast-sha256.mjs";
 import "../_libs/supabase__postgrest-js.mjs";
-import "../_libs/supabase__realtime-js.mjs";
-import "../_libs/supabase__phoenix.mjs";
 import "../_libs/supabase__storage-js.mjs";
 import "../_libs/iceberg-js.mjs";
-import "../_libs/supabase__auth-js.mjs";
-import "tslib";
 import "../_libs/supabase__functions-js.mjs";
+import "tslib";
+import "../_libs/supabase__phoenix.mjs";
 var createServerRpc = (serverFnMeta, splitImportFn) => {
   const url = "/_serverFn/" + serverFnMeta.id;
   return Object.assign(splitImportFn, {

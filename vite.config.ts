@@ -15,7 +15,12 @@ export default defineConfig({
       disableCsrfMiddlewareWarning: true,
     },
   },
+  vite: {
+    ssr: {
+      noExternal: ["tslib", "@supabase/supabase-js", "@supabase/auth-js"],
+    },
+  },
   nitro: {
-    preset: "vercel"
-  }
+    preset: "vercel",
+  },
 });
