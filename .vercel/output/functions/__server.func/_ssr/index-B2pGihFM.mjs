@@ -1,4 +1,580 @@
-import { R as React } from "./react.mjs";
+import { r as reactExports, W as jsxRuntimeExports, V as React } from "./server-B624L8BS.mjs";
+import { t as toast } from "./router-Bk79mrfr.mjs";
+import { u as updateLeadMeetingStatusFn, a as updateLeadMeetingTimeFn, s as submitLeadFn } from "./leads-Bnvaf6H1.mjs";
+import { o as objectType, s as stringType } from "./types-DLNE6-nO.mjs";
+import "node:async_hooks";
+import "node:stream";
+import "node:stream/web";
+import "util";
+import "crypto";
+import "async_hooks";
+import "stream";
+const LeadModalCtx = reactExports.createContext(null);
+function LeadModalProvider({ children }) {
+  const [open, setOpen] = reactExports.useState(false);
+  const [fund, setFund] = reactExports.useState("flexi");
+  const openModal = reactExports.useCallback((f) => {
+    setFund(f ?? "flexi");
+    setOpen(true);
+  }, []);
+  const closeModal = reactExports.useCallback(() => setOpen(false), []);
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(LeadModalCtx.Provider, { value: { open, fund, openModal, closeModal }, children });
+}
+function useLeadModal() {
+  const ctx = reactExports.useContext(LeadModalCtx);
+  if (!ctx) throw new Error("useLeadModal must be used within LeadModalProvider");
+  return ctx;
+}
+const FUNDS$1 = {
+  flexi: {
+    tag: "Flexi Cap Pick · 2025–2030",
+    name: "Parag Parikh Flexi Cap Fund",
+    cat: "FLEXI CAP CATEGORY · DIRECT GROWTH",
+    note: "Why this pick: Portfolio PE of ~22x vs category average ~28x. The fund maintains 15–20% international allocation providing rupee hedge — relevant as the rupee faces structural depreciation pressure. Portfolio turnover under 15% — true buy-and-hold philosophy. Ideal for a 5-year+ horizon with moderate risk appetite."
+  },
+  mid: {
+    tag: "Mid Cap Pick · 2025–2030",
+    name: "Nippon India Growth Fund",
+    cat: "MID CAP CATEGORY · DIRECT GROWTH",
+    note: "Why this pick: Consistent alpha over benchmark across 3 market cycles. Portfolio concentrated in high ROCE businesses with strong domestic demand tailwinds from India's capex super-cycle. Fund manager with 9+ year tenure — institutional memory that matters enormously in mid cap navigation."
+  },
+  small: {
+    tag: "Small Cap Pick · 2025–2030",
+    name: "Quant Small Cap Fund",
+    cat: "SMALL CAP CATEGORY · DIRECT GROWTH",
+    note: "Why this pick: Unique quant-driven stock selection removes emotional bias from the process. Low portfolio turnover for a small cap fund — unusually disciplined. Currently holds quality businesses at valuations below their 3-year average. High risk, high conviction — only suitable for 5+ year horizon investors."
+  }
+};
+function Navbar() {
+  const { openModal } = useLeadModal();
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("nav", { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "nav-logo", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "nav-wordmark", children: [
+      "Shri",
+      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Nivesh" })
+    ] }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "nav-center" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "nav-right", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "nav-badge", children: "NISM CERTIFIED · ARN Holder" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "nav-cta", onClick: () => openModal("flexi"), children: "See Fund Picks →" })
+    ] })
+  ] });
+}
+function Hero() {
+  const { openModal } = useLeadModal();
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "hero", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "hero-bg" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "hero-left", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "hero-tag", children: "Model Portfolio · Jan 2020 – May 2025" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("h1", { className: "hero-headline", children: [
+        "₹10,000/month SIP.",
+        /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("em", { children: "5 Years. 3 Funds." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "accent", children: "Here's What Happened." })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "hero-sub", children: "Not star ratings. Not bank recommendations. Fundamentals — PE ratios, fund manager stability, and portfolio concentration. This is what disciplined research builds." }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "hero-actions", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "btn-primary", onClick: () => openModal("flexi"), children: "See Our 2025–30 Fund Picks" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "#portfolio", className: "btn-ghost", children: "View The Numbers" })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "hero-stats", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "stat-item", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "stat-num", children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "pv green", children: "₹11.4L" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "stat-label", children: "From ₹6L Invested" })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "stat-item", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "stat-num", children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "pv green", children: "19.8%" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "stat-label", children: "Portfolio XIRR" })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "stat-item", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "stat-num", children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "+5.6%" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "stat-label", children: "Alpha vs Nifty 50" })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "hero-disc", children: "* Illustrative model portfolio. Not actual client data. Past performance is not indicative of future returns." })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "hero-right", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "hero-card-stack", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "float-badge one", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "badge-icon", children: "📈" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "badge-text", children: "Portfolio XIRR" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "badge-sub", children: "19.8% · 5 Year SIP" })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "card-main", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "card-header", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "card-label", children: "Illustrative Model Portfolio" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "card-badge", children: "↑ Beat Nifty by 5.6%" })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "card-disc", children: "Not client data · Based on public NAV history" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "portfolio-value", children: "₹11,40,000" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "portfolio-change", children: "↑ ₹5,40,000 gain on ₹6,00,000 invested" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mini-chart", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { viewBox: "0 0 360 60", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("defs", { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("linearGradient", { id: "g1", x1: "0", y1: "0", x2: "0", y2: "1", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("stop", { offset: "0%", stopColor: "#4a8c3f", stopOpacity: "0.22" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("stop", { offset: "100%", stopColor: "#4a8c3f", stopOpacity: "0" })
+          ] }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "path",
+            {
+              d: "M0,54 L40,50 L80,46 L100,42 L140,36 L180,28 L220,20 L260,14 L300,8 L360,3 L360,60 L0,60 Z",
+              fill: "url(#g1)"
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "path",
+            {
+              d: "M0,54 L40,50 L80,46 L100,42 L140,36 L180,28 L220,20 L260,14 L300,8 L360,3",
+              stroke: "#4a8c3f",
+              strokeWidth: "2.5",
+              fill: "none",
+              strokeLinecap: "round"
+            }
+          )
+        ] }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fund-list", children: [
+          { n: "Flexi Cap Pick", c: "Large & Mid Cap Blend", r: "18.4%" },
+          { n: "Mid Cap Pick", c: "Pure Mid Cap Category", r: "22.1%" },
+          { n: "Small Cap Pick", c: "Small Cap Category", r: "27.8%" }
+        ].map((f) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "fund-row", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "fund-info", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "fund-name", children: f.n }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "fund-cat", children: f.c })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "fund-ret", children: f.r })
+        ] }, f.n)) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "card-bottom", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "xirr-row", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "xirr-box", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Portfolio XIRR" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "xv green", children: "19.8%" })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "xirr-box", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Nifty 50 TRI" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "xv orange", children: "14.2%" })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "vs-badge", children: "📊  Alpha generated: +5.6% per annum above benchmark" })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "float-badge two", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "badge-icon", children: "🔒" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "badge-text", children: "Fund Names" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "badge-sub", children: "Free · One click away" })
+      ] })
+    ] }) })
+  ] });
+}
+function TrustBar() {
+  const items = [
+    { i: "🏛️", t: "NSE Invest Empanelled" },
+    { i: "🔬", t: "NISM Certified" },
+    { i: "📜", t: "AMFI Registered MFD" },
+    { i: "🔒", t: "Free Portfolio Consultation" },
+    { i: "🌾", t: "Rooted in Odisha · Pan-India" }
+  ];
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "trust-bar", children: items.map((it) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "trust-item", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "icon", children: it.i }),
+    " ",
+    it.t
+  ] }, it.t)) });
+}
+const BARS = [
+  { yr: "2020", pct: "+14.9%", p: 33, n: 33, sub: "Both flat" },
+  { yr: "2021", pct: "+54%", p: 100, n: 65, sub: "vs +24.1%" },
+  { yr: "2022", pct: "−8%", p: 16, n: 20, sub: "Down year", neg: true },
+  { yr: "2023", pct: "+38.2%", p: 82, n: 54, sub: "vs +20.1%" },
+  { yr: "2024", pct: "+22.4%", p: 52, n: 37, sub: "vs +15.3%" },
+  { yr: "2025", pct: "+11.8%", p: 28, n: 19, sub: "YTD" }
+];
+const FUNDS = [
+  {
+    l: "Fund 1 · Flexi Cap",
+    n: "Diversified Growth Pick",
+    tags: [
+      ["PE at entry", "21.3x"],
+      ["Expense", "0.69%"],
+      ["Manager tenure", "11+ yrs"]
+    ],
+    x: "18.4%"
+  },
+  {
+    l: "Fund 2 · Mid Cap",
+    n: "Mid-Market Compounder",
+    tags: [
+      ["PE at entry", "24.6x"],
+      ["Expense", "0.82%"],
+      ["Manager tenure", "8+ yrs"]
+    ],
+    x: "22.1%"
+  },
+  {
+    l: "Fund 3 · Small Cap",
+    n: "High-Conviction Frontier",
+    tags: [
+      ["PE at entry", "19.8x"],
+      ["Expense", "0.94%"],
+      ["Turnover", "<20%"]
+    ],
+    x: "27.8%"
+  }
+];
+function PortfolioSection() {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "portfolio-section", id: "portfolio", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "section-tag reveal-on-scroll visible", children: "The Numbers" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("h2", { className: "section-title reveal-on-scroll visible", children: [
+      "₹10K/month. 5 years.",
+      /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
+      "3 funds. ",
+      /* @__PURE__ */ jsxRuntimeExports.jsx("em", { children: "Here's the breakdown." })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "section-lead reveal-on-scroll visible", children: "Built on publicly available NAV data. Every fund chosen by a documented research process — not hype, not NFO pressure, not distributor incentives." }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "portfolio-grid", style: { marginTop: 56 }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "chart-block reveal-on-scroll visible", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "chart-title", children: "Annual Returns: Model Portfolio vs Nifty 50 TRI" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "chart-sub", children: "Illustrative · Based on public NAV data · Not client returns" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "chart-legend", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "leg-item", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "leg-dot p" }),
+            "Model Portfolio"
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "leg-item", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "leg-dot n" }),
+            "Nifty 50 TRI"
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "bars-wrap", children: BARS.map((b2, i2) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bar-group", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `bar-pct${b2.neg ? " neg" : ""}`, children: b2.pct }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bar-pair", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "div",
+              {
+                className: `b ${b2.neg ? "neg" : "p"}`,
+                style: { height: `${b2.p}%`, animationDelay: `${0.1 + i2 * 0.1}s` }
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "div",
+              {
+                className: `b ${b2.neg ? "neg-n" : "n"}`,
+                style: { height: `${b2.n}%`, animationDelay: `${0.3 + i2 * 0.1}s` }
+              }
+            )
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bar-lbl", children: [
+            b2.yr,
+            /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: b2.neg ? "rgba(224,123,42,0.6)" : "rgba(255,255,255,0.3)" }, children: b2.sub })
+          ] })
+        ] }, b2.yr)) })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fund-cards reveal-on-scroll visible", children: FUNDS.map((f) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "fund-card-item", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fci-label", children: f.l }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fci-name", children: f.n }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fci-meta", children: f.tags.map(([k, v]) => /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "fci-tag", children: [
+              k,
+              ": ",
+              /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: v })
+            ] }, k)) })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "fci-right", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fci-xirr", children: f.x }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fci-xirr-lbl", children: "XIRR · 5Y SIP" })
+          ] })
+        ] }, f.n)) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "portfolio-summary reveal-on-scroll visible", style: { marginTop: 28 }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ps-item", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Total Invested" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "pv cream", children: "₹6.0 L" })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ps-item", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Current Value" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "pv green", children: "₹11.4 L" })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ps-item", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Absolute Gain" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "pv orange", children: "₹5.4 L" })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ps-item", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Portfolio XIRR" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "pv green", children: "19.8%" })
+          ] })
+        ] })
+      ] })
+    ] })
+  ] });
+}
+const CARDS$1 = [
+  {
+    key: "flexi",
+    cat: "Flexi Cap Pick · 2025–30",
+    tone: "flexi",
+    teaser: /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+      "This fund has a ",
+      /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "portfolio PE lower than its own 5-year average" }),
+      " right now — buying growth at a discount. The fund manager has navigated 3 market corrections without deviating from mandate once."
+    ] })
+  },
+  {
+    key: "mid",
+    cat: "Mid Cap Pick · 2025–30",
+    tone: "mid",
+    teaser: /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+      "Mid caps are entering the sweet spot of India's domestic capex cycle. This fund holds",
+      " ",
+      /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "high ROCE businesses with zero net debt" }),
+      " — the kind that compound quietly for years without making news."
+    ] })
+  },
+  {
+    key: "small",
+    cat: "Small Cap Pick · 2025–30",
+    tone: "small",
+    teaser: /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+      "Not all small caps are risky. This fund has a",
+      " ",
+      /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "portfolio turnover ratio under 20%" }),
+      " — the manager buys and holds conviction bets. That discipline is exactly how small cap wealth gets built, not traded."
+    ] })
+  }
+];
+function RecommendationSection() {
+  const { openModal } = useLeadModal();
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("section", { className: "reco-section", id: "recommendations", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reco-grid", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reco-left reveal-on-scroll visible", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "section-tag", children: "Research · 2025–2030" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("h2", { className: "section-title", children: [
+        "My current picks for the ",
+        /* @__PURE__ */ jsxRuntimeExports.jsx("em", { children: "next 5-year cycle." })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "reco-body", children: "The model portfolio above wasn't luck. It was a process. I've run the same process to identify 3 funds for 2025–2030. The economy is entering a different phase — the right funds for the next cycle are not the same as the last one." }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "reco-body", children: "The fund names are free to access. I only ask that you share your details so I can follow up with genuinely personalised advice." }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "reco-points", children: [
+        "Each fund selected after analysing 100+ schemes — PE ratios, turnover, manager track record across a full market cycle",
+        "Macro tailwinds considered — domestic consumption, capex cycle, and rupee dynamics for 2025–2030",
+        "Completely free. No paid subscription. Just share your details and the fund names are revealed instantly",
+        "Backed by SEBI Registered Research Analyst credentials — not broker opinions, not YouTube tips"
+      ].map((t2) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reco-point", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "rp-dot", children: "✓" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: t2 })
+      ] }, t2)) })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "locked-cards reveal-on-scroll visible", children: CARDS$1.map((c) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "locked-card", onClick: () => openModal(c.key), children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "lc-top", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `lc-cat ${c.tone}`, children: c.cat }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "lc-lock", children: "🔒" })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "lc-teaser", children: c.teaser }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "lc-blur" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "lc-btn", children: "Reveal Fund Name  →" })
+    ] }, c.key)) })
+  ] }) });
+}
+const STEPS = [
+  {
+    n: 1,
+    t: "See The Fund Picks",
+    d: "Click any locked card above. Share your name, phone, and email. Fund names are revealed instantly — free, no payment required."
+  },
+  {
+    n: 2,
+    t: "Book Your Slot",
+    d: "Use the Calendly widget to instantly schedule a 20-minute portfolio review call at a time that works perfectly for you.",
+    alt: true
+  },
+  {
+    n: 3,
+    t: "Portfolio Consultation",
+    d: "We discuss your financial goals, current investments, risk appetite, and see how our approach fits into your plans."
+  },
+  {
+    n: 4,
+    t: "Actionable Insights",
+    d: "Walk away with absolute clarity on where you stand and what your next steps should be — no pressure, no commitment.",
+    alt: true
+  }
+];
+function ProcessSection() {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "process-section", id: "process", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "process-header", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "section-tag", children: "Simple Process" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("h2", { className: "section-title", children: [
+        "From curiosity to ",
+        /* @__PURE__ */ jsxRuntimeExports.jsx("em", { children: "clarity" }),
+        " in 4 steps"
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "process-steps", children: STEPS.map((s2, i2) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "div",
+      {
+        className: "process-step reveal-on-scroll visible",
+        style: { transitionDelay: `${i2 * 0.1}s` },
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `step-num${s2.alt ? " alt" : ""}`, children: s2.n }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("h4", { className: "step-title", children: s2.t }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "step-desc", children: s2.d })
+        ]
+      },
+      s2.n
+    )) })
+  ] });
+}
+const CARDS = [
+  {
+    i: "🔬",
+    t: "SEBI-Registered Research",
+    d: "Not opinions — registered, accountable research with proper disclosures. Every fund pick has a documented rationale."
+  },
+  {
+    i: "🤝",
+    t: "Clarity Before Commitment",
+    d: "We offer a free portfolio consultation before anything else. We understand your goals first, without any pressure to invest."
+  },
+  {
+    i: "🌾",
+    t: "Local Roots, National Reach",
+    d: "Deep roots in Odisha. We understand local income patterns, agricultural cycles, and family wealth goals from the ground up."
+  },
+  {
+    i: "📚",
+    t: "Education First",
+    d: "Market insights, investing psychology, IPO analysis — freely shared on X (Twitter) every day. No paywall, no agenda."
+  }
+];
+function WhyUs() {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "why-section", id: "why", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "why-left reveal-on-scroll visible", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "section-tag", children: "Why ShriNivesh" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("h2", { className: "section-title", children: [
+        "Research-First.",
+        /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("em", { children: "Client-Always." })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "why-desc", children: "We're not distributors pushing NFOs for commission. We're educators, analysts, and long-term partners. Every recommendation comes backed by documented research — PE ratios, manager evaluation, and macro alignment — not sales targets." })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "why-grid reveal-on-scroll visible", children: CARDS.map((c) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "why-card", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "why-icon", children: c.i }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h4", { className: "why-title", children: c.t }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "why-text", children: c.d })
+    ] }, c.t)) })
+  ] });
+}
+const ITEMS = [
+  {
+    q: "Started my SIP with just ₹5,000/month on Ashish's guidance. Three years later, my corpus has grown beyond what any FD could have done. The guidance was patient and genuinely personalised.",
+    n: "Ramesh Mohanty",
+    r: "Small Business Owner, Bhubaneswar",
+    a: "R"
+  },
+  {
+    q: "The research content on X first caught my attention. Then the consultation blew me away — no sales pitch, just honest advice about what suits my risk tolerance and timeline. Rare.",
+    n: "Priya Nanda",
+    r: "IT Professional, Hyderabad",
+    a: "P"
+  },
+  {
+    q: "As a farmer, I never thought mutual funds were for me. ShriNivesh explained everything simply and helped me start a small SIP. Two years in, I recommend it to everyone in my village.",
+    n: "Suresh Pradhan",
+    r: "Cotton Farmer, Sambalpur",
+    a: "S"
+  }
+];
+function Testimonials() {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "test-section", id: "testimonials", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "test-header", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "section-tag", children: "Client Stories" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("h2", { className: "section-title", children: [
+        "Real people. ",
+        /* @__PURE__ */ jsxRuntimeExports.jsx("em", { children: "Real wealth built." })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "test-grid", children: ITEMS.map((it, i2) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "div",
+      {
+        className: "test-card reveal-on-scroll visible",
+        style: { transitionDelay: `${i2 * 0.1}s` },
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "stars", children: "★★★★★" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "test-quote", children: it.q }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "test-author", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "author-avatar", children: it.a }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "author-name", children: it.n }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "author-role", children: it.r })
+            ] })
+          ] })
+        ]
+      },
+      it.n
+    )) })
+  ] });
+}
+function Manifesto() {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "manifesto-section", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "manifesto-inner reveal-on-scroll visible", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "manifesto-text", children: [
+      "“The funds that built wealth from 2020–2025 are ",
+      /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "not necessarily" }),
+      " the funds for 2025–2030. The economy rotates. The right advisor rotates with it.”"
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "manifesto-attr", children: "Ashish · ShriNivesh · SEBI Registered Research Analyst" })
+  ] }) });
+}
+function CTASection() {
+  const { openModal } = useLeadModal();
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "cta-section", id: "cta", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cta-eyebrow", children: "Start Here · It's Free" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("h2", { className: "cta-title", children: [
+      "See the 3 funds.",
+      /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("em", { children: "Then let's build your portfolio." })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cta-sub", children: "Fund names revealed instantly after you share your details. No payment. No spam. Just honest research and a free follow-up call." }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cta-actions", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "btn-cta", onClick: () => openModal("flexi"), children: "See Free Fund Picks Now" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "mailto:hello@shrinivesh.com", className: "btn-cta-alt", children: "Talk to Ashish Directly" })
+    ] })
+  ] });
+}
+function Footer() {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("footer", { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "footer-top", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "footer-brand", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "footer-brand-name", children: "ShriNivesh" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "SEBI Registered Research Analyst & AMFI Registered Mutual Fund Distributor. Empanelled with NSE Invest. Helping Indian investors build wealth through research and clarity — beyond just investing." })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "footer-col", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h4", { children: "Services" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "#", children: "Mutual Fund Distribution" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "#", children: "SIP Planning" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "#", children: "Research Reports" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "#", children: "Goal-Based Planning" }) })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "footer-col", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h4", { children: "Resources" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "#", children: "Market Insights" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "#", children: "IPO Analysis" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "#", children: "Investor Education" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "#", children: "Follow on X / Twitter" }) })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "footer-col", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h4", { children: "Connect" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "#", children: "Contact Us" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "#", children: "WhatsApp" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "#", children: "NSE Invest Portal" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "#", children: "Disclosures" }) })
+        ] })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "footer-bottom", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "footer-copy", children: "© 2025 ShriNivesh. All rights reserved." }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "footer-disc", children: "Mutual fund investments are subject to market risks. Read all scheme-related documents carefully before investing. The model portfolio shown is illustrative only and does not represent actual client returns. Past performance is not indicative of future returns. SEBI RA Registration: INH000XXXXXX · ARN: XXXXXX" })
+    ] })
+  ] });
+}
 var isCheckBoxInput = (element) => element.type === "checkbox";
 var isDateObject = (value) => value instanceof Date;
 var isNullOrUndefined = (value) => value == null;
@@ -185,7 +761,7 @@ var createSubject = () => {
     _observers.push(observer);
     return {
       unsubscribe: () => {
-        _observers = _observers.filter((o) => o !== observer);
+        _observers = _observers.filter((o2) => o2 !== observer);
       }
     };
   };
@@ -809,8 +1385,8 @@ function createFormControl(props = {}) {
     const segments = isKey(name) ? [name] : stringToPath(name);
     let formValues = _formValues;
     let defaultValues = _defaultValues;
-    for (let i = 0; i < segments.length - 1; i++) {
-      const key = segments[i];
+    for (let i2 = 0; i2 < segments.length - 1; i2++) {
+      const key = segments[i2];
       formValues = isNullOrUndefined(formValues) ? formValues : formValues[key];
       defaultValues = isNullOrUndefined(defaultValues) ? defaultValues : defaultValues[key];
       if (formValues === null && defaultValues !== null) {
@@ -1255,12 +1831,12 @@ function createFormControl(props = {}) {
     options.shouldFocus && !validationResult && iterateFieldsByAction(_fields, _focusInput, name ? fieldNames : _names.mount);
     return validationResult;
   };
-  const getValues = (fieldNames, config) => {
+  const getValues = (fieldNames, config2) => {
     let values = {
       ..._state.mount ? _formValues : _defaultValues
     };
-    if (config) {
-      values = extractFormValues(config.dirtyFields ? _formState.dirtyFields : _formState.touchedFields, values);
+    if (config2) {
+      values = extractFormValues(config2.dirtyFields ? _formState.dirtyFields : _formState.touchedFields, values);
     }
     return isUndefined(fieldNames) ? values : isString(fieldNames) ? get(values, fieldNames) : fieldNames.map((name) => get(values, name));
   };
@@ -1849,9 +2425,635 @@ function useForm(props = {}) {
   _formControl.current.formState = React.useMemo(() => getProxyFormState(formState, control), [control, formState]);
   return _formControl.current;
 }
+const r = (t2, r2, o2) => {
+  if (t2 && "reportValidity" in t2) {
+    const s2 = get(o2, r2);
+    t2.setCustomValidity(s2 && s2.message || ""), t2.reportValidity();
+  }
+}, o = (e, t2) => {
+  for (const o2 in t2.fields) {
+    const s2 = t2.fields[o2];
+    s2 && s2.ref && "reportValidity" in s2.ref ? r(s2.ref, o2, e) : s2 && s2.refs && s2.refs.forEach((t3) => r(t3, o2, e));
+  }
+}, s$1 = (r2, s2) => {
+  s2.shouldUseNativeValidation && o(r2, s2);
+  const n2 = {};
+  for (const o2 in r2) {
+    const c = get(s2.fields, o2), f = Object.assign(r2[o2] || {}, { ref: c && c.ref });
+    if (i$1(s2.names || Object.keys(r2), o2)) {
+      const r3 = Object.assign({}, get(n2, o2));
+      set(r3, "root", f), set(n2, o2, r3);
+    } else set(n2, o2, f);
+  }
+  return n2;
+}, i$1 = (e, t2) => {
+  const r2 = n(t2).replace(/[.*+?^${}()|\\]/g, "\\$&");
+  return e.some((e2) => n(e2).match(`^${r2}\\.\\d+`));
+};
+function n(e) {
+  return e.replace(/[\[\]]/g, "");
+}
+function $constructor(name, initializer2, params) {
+  function init(inst, def) {
+    var _a;
+    Object.defineProperty(inst, "_zod", {
+      value: inst._zod ?? {},
+      enumerable: false
+    });
+    (_a = inst._zod).traits ?? (_a.traits = /* @__PURE__ */ new Set());
+    inst._zod.traits.add(name);
+    initializer2(inst, def);
+    for (const k in _.prototype) {
+      if (!(k in inst))
+        Object.defineProperty(inst, k, { value: _.prototype[k].bind(inst) });
+    }
+    inst._zod.constr = _;
+    inst._zod.def = def;
+  }
+  const Parent = params?.Parent ?? Object;
+  class Definition extends Parent {
+  }
+  Object.defineProperty(Definition, "name", { value: name });
+  function _(def) {
+    var _a;
+    const inst = params?.Parent ? new Definition() : this;
+    init(inst, def);
+    (_a = inst._zod).deferred ?? (_a.deferred = []);
+    for (const fn of inst._zod.deferred) {
+      fn();
+    }
+    return inst;
+  }
+  Object.defineProperty(_, "init", { value: init });
+  Object.defineProperty(_, Symbol.hasInstance, {
+    value: (inst) => {
+      if (params?.Parent && inst instanceof params.Parent)
+        return true;
+      return inst?._zod?.traits?.has(name);
+    }
+  });
+  Object.defineProperty(_, "name", { value: name });
+  return _;
+}
+class $ZodAsyncError extends Error {
+  constructor() {
+    super(`Encountered Promise during synchronous parse. Use .parseAsync() instead.`);
+  }
+}
+const globalConfig = {};
+function config(newConfig) {
+  return globalConfig;
+}
+function jsonStringifyReplacer(_, value) {
+  if (typeof value === "bigint")
+    return value.toString();
+  return value;
+}
+const captureStackTrace = Error.captureStackTrace ? Error.captureStackTrace : (..._args) => {
+};
+function unwrapMessage(message) {
+  return typeof message === "string" ? message : message?.message;
+}
+function finalizeIssue(iss, ctx, config2) {
+  const full = { ...iss, path: iss.path ?? [] };
+  if (!iss.message) {
+    const message = unwrapMessage(iss.inst?._zod.def?.error?.(iss)) ?? unwrapMessage(ctx?.error?.(iss)) ?? unwrapMessage(config2.customError?.(iss)) ?? unwrapMessage(config2.localeError?.(iss)) ?? "Invalid input";
+    full.message = message;
+  }
+  delete full.inst;
+  delete full.continue;
+  if (!ctx?.reportInput) {
+    delete full.input;
+  }
+  return full;
+}
+const initializer = (inst, def) => {
+  inst.name = "$ZodError";
+  Object.defineProperty(inst, "_zod", {
+    value: inst._zod,
+    enumerable: false
+  });
+  Object.defineProperty(inst, "issues", {
+    value: def,
+    enumerable: false
+  });
+  Object.defineProperty(inst, "message", {
+    get() {
+      return JSON.stringify(def, jsonStringifyReplacer, 2);
+    },
+    enumerable: true
+    // configurable: false,
+  });
+  Object.defineProperty(inst, "toString", {
+    value: () => inst.message,
+    enumerable: false
+  });
+};
+const $ZodError = $constructor("$ZodError", initializer);
+const $ZodRealError = $constructor("$ZodError", initializer, { Parent: Error });
+const _parse = (_Err) => (schema2, value, _ctx, _params) => {
+  const ctx = _ctx ? Object.assign(_ctx, { async: false }) : { async: false };
+  const result = schema2._zod.run({ value, issues: [] }, ctx);
+  if (result instanceof Promise) {
+    throw new $ZodAsyncError();
+  }
+  if (result.issues.length) {
+    const e = new (_params?.Err ?? _Err)(result.issues.map((iss) => finalizeIssue(iss, ctx, config())));
+    captureStackTrace(e, _params?.callee);
+    throw e;
+  }
+  return result.value;
+};
+const parse = /* @__PURE__ */ _parse($ZodRealError);
+const _parseAsync = (_Err) => async (schema2, value, _ctx, params) => {
+  const ctx = _ctx ? Object.assign(_ctx, { async: true }) : { async: true };
+  let result = schema2._zod.run({ value, issues: [] }, ctx);
+  if (result instanceof Promise)
+    result = await result;
+  if (result.issues.length) {
+    const e = new (params?.Err ?? _Err)(result.issues.map((iss) => finalizeIssue(iss, ctx, config())));
+    captureStackTrace(e, params?.callee);
+    throw e;
+  }
+  return result.value;
+};
+const parseAsync = /* @__PURE__ */ _parseAsync($ZodRealError);
+function t() {
+  return t = Object.assign ? Object.assign.bind() : function(r2) {
+    for (var e = 1; e < arguments.length; e++) {
+      var n2 = arguments[e];
+      for (var o2 in n2) ({}).hasOwnProperty.call(n2, o2) && (r2[o2] = n2[o2]);
+    }
+    return r2;
+  }, t.apply(null, arguments);
+}
+function s(r2, e) {
+  try {
+    var n2 = r2();
+  } catch (r3) {
+    return e(r3);
+  }
+  return n2 && n2.then ? n2.then(void 0, e) : n2;
+}
+function i(r2, e) {
+  for (var o2 = {}; r2.length; ) {
+    var t2 = r2[0], s2 = t2.code, i2 = t2.message, a2 = t2.path.join(".");
+    if (!o2[a2]) if ("unionErrors" in t2) {
+      var u2 = t2.unionErrors[0].errors[0];
+      o2[a2] = { message: u2.message, type: u2.code };
+    } else o2[a2] = { message: i2, type: s2 };
+    if ("unionErrors" in t2 && t2.unionErrors.forEach(function(e2) {
+      return e2.errors.forEach(function(e3) {
+        return r2.push(e3);
+      });
+    }), e) {
+      var c = o2[a2].types, f = c && c[t2.code];
+      o2[a2] = appendErrors(a2, e, o2, s2, f ? [].concat(f, t2.message) : t2.message);
+    }
+    r2.shift();
+  }
+  return o2;
+}
+function a(r2, e) {
+  for (var o2 = {}, s2 = function() {
+    var s3 = r2[0], i2 = s3.code, a2 = s3.message, u2 = s3.path.join(".");
+    if (!o2[u2]) if ("invalid_union" === s3.code && s3.errors.length > 0) {
+      var c = s3.errors[0][0];
+      o2[u2] = { message: c.message, type: c.code };
+    } else o2[u2] = { message: a2, type: i2 };
+    if ("invalid_union" === s3.code && s3.errors.forEach(function(e2) {
+      return e2.forEach(function(e3) {
+        return r2.push(t({}, e3, { path: [].concat(s3.path, e3.path) }));
+      });
+    }), e) {
+      var f = o2[u2].types, l = f && f[s3.code];
+      o2[u2] = appendErrors(u2, e, o2, i2, l ? [].concat(l, s3.message) : s3.message);
+    }
+    r2.shift();
+  }; r2.length; ) s2();
+  return o2;
+}
+function u(n2, t2, u2) {
+  if (void 0 === u2 && (u2 = {}), (function(r2) {
+    return "_def" in r2 && "object" == typeof r2._def && "typeName" in r2._def;
+  })(n2)) return function(o$1, a2, c) {
+    try {
+      return Promise.resolve(s(function() {
+        return Promise.resolve(n2["sync" === u2.mode ? "parse" : "parseAsync"](o$1, t2)).then(function(e) {
+          return c.shouldUseNativeValidation && o({}, c), { errors: {}, values: u2.raw ? Object.assign({}, o$1) : e };
+        });
+      }, function(r2) {
+        if ((function(r3) {
+          return Array.isArray(null == r3 ? void 0 : r3.issues);
+        })(r2)) return { values: {}, errors: s$1(i(r2.errors, !c.shouldUseNativeValidation && "all" === c.criteriaMode), c) };
+        throw r2;
+      }));
+    } catch (r2) {
+      return Promise.reject(r2);
+    }
+  };
+  if ((function(r2) {
+    return "_zod" in r2 && "object" == typeof r2._zod;
+  })(n2)) return function(i2, c, f) {
+    try {
+      return Promise.resolve(s(function() {
+        return Promise.resolve(("sync" === u2.mode ? parse : parseAsync)(n2, i2, t2)).then(function(e) {
+          return f.shouldUseNativeValidation && o({}, f), { errors: {}, values: u2.raw ? Object.assign({}, i2) : e };
+        });
+      }, function(r2) {
+        if ((function(r3) {
+          return r3 instanceof $ZodError;
+        })(r2)) return { values: {}, errors: s$1(a(r2.issues, !f.shouldUseNativeValidation && "all" === f.criteriaMode), f) };
+        throw r2;
+      }));
+    } catch (r2) {
+      return Promise.reject(r2);
+    }
+  };
+  throw new Error("Invalid input: not a Zod schema");
+}
+const b = "https://app.cal.com/embed/embed.js";
+function m(s2 = b) {
+  (function(r2, e, l) {
+    let t2 = function(n2, i2) {
+      n2.q.push(i2);
+    }, o2 = r2.document;
+    r2.Cal = r2.Cal || function() {
+      let n2 = r2.Cal, i2 = arguments;
+      if (n2.loaded || (n2.ns = {}, n2.q = n2.q || [], o2.head.appendChild(o2.createElement("script")).src = e, n2.loaded = true), i2[0] === l) {
+        const u2 = function() {
+          t2(u2, arguments);
+        }, c = i2[1];
+        u2.q = u2.q || [], typeof c == "string" ? (n2.ns[c] = n2.ns[c] || u2, t2(n2.ns[c], i2), t2(n2, ["initNamespace", c])) : t2(n2, i2);
+        return;
+      }
+      t2(n2, i2);
+    };
+  })(
+    window,
+    //! Replace it with "https://cal.com/embed.js" or the URL where you have embed.js installed
+    s2,
+    "init"
+  );
+  return window.Cal;
+}
+function q(s2) {
+  const [r2, e] = reactExports.useState();
+  return reactExports.useEffect(() => {
+    e(() => m(s2));
+  }, []), r2;
+}
+const h = function(r2) {
+  const {
+    calLink: e,
+    calOrigin: l,
+    namespace: t2 = "",
+    config: o2,
+    initConfig: n2 = {},
+    embedJsUrl: i2,
+    ...u2
+  } = r2;
+  if (!e)
+    throw new Error("calLink is required");
+  const c = reactExports.useRef(false), a2 = q(i2), f = reactExports.useRef(null);
+  return reactExports.useEffect(() => {
+    if (!a2 || c.current || !f.current)
+      return;
+    c.current = true;
+    const d = f.current;
+    t2 ? (a2("init", t2, {
+      ...n2,
+      origin: l
+    }), a2.ns[t2]("inline", {
+      elementOrSelector: d,
+      calLink: e,
+      config: o2
+    })) : (a2("init", {
+      ...n2,
+      origin: l
+    }), a2("inline", {
+      elementOrSelector: d,
+      calLink: e,
+      config: o2
+    }));
+  }, [a2, e, o2, t2, l, n2]), a2 ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", {
+    ref: f,
+    ...u2
+  }) : null;
+}, R = h;
+function j(s2) {
+  const r2 = {}, { namespace: e = "", embedJsUrl: l } = r2;
+  return new Promise(function t2(o2) {
+    const n2 = m(l);
+    n2("init", e);
+    const i2 = e ? n2.ns[e] : n2;
+    if (!i2) {
+      setTimeout(() => {
+        t2(o2);
+      }, 50);
+      return;
+    }
+    o2(i2);
+  });
+}
+const mergeClasses = (...classes) => classes.filter((className, index, array) => {
+  return Boolean(className) && className.trim() !== "" && array.indexOf(className) === index;
+}).join(" ").trim();
+const toKebabCase = (string) => string.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
+const toCamelCase = (string) => string.replace(
+  /^([A-Z])|[\s-_]+(\w)/g,
+  (match, p1, p2) => p2 ? p2.toUpperCase() : p1.toLowerCase()
+);
+const toPascalCase = (string) => {
+  const camelCase = toCamelCase(string);
+  return camelCase.charAt(0).toUpperCase() + camelCase.slice(1);
+};
+var defaultAttributes = {
+  xmlns: "http://www.w3.org/2000/svg",
+  width: 24,
+  height: 24,
+  viewBox: "0 0 24 24",
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: 2,
+  strokeLinecap: "round",
+  strokeLinejoin: "round"
+};
+const hasA11yProp = (props) => {
+  for (const prop in props) {
+    if (prop.startsWith("aria-") || prop === "role" || prop === "title") {
+      return true;
+    }
+  }
+  return false;
+};
+const Icon = reactExports.forwardRef(
+  ({
+    color = "currentColor",
+    size = 24,
+    strokeWidth = 2,
+    absoluteStrokeWidth,
+    className = "",
+    children,
+    iconNode,
+    ...rest
+  }, ref) => reactExports.createElement(
+    "svg",
+    {
+      ref,
+      ...defaultAttributes,
+      width: size,
+      height: size,
+      stroke: color,
+      strokeWidth: absoluteStrokeWidth ? Number(strokeWidth) * 24 / Number(size) : strokeWidth,
+      className: mergeClasses("lucide", className),
+      ...!children && !hasA11yProp(rest) && { "aria-hidden": "true" },
+      ...rest
+    },
+    [
+      ...iconNode.map(([tag, attrs]) => reactExports.createElement(tag, attrs)),
+      ...Array.isArray(children) ? children : [children]
+    ]
+  )
+);
+const createLucideIcon = (iconName, iconNode) => {
+  const Component = reactExports.forwardRef(
+    ({ className, ...props }, ref) => reactExports.createElement(Icon, {
+      ref,
+      iconNode,
+      className: mergeClasses(
+        `lucide-${toKebabCase(toPascalCase(iconName))}`,
+        `lucide-${iconName}`,
+        className
+      ),
+      ...props
+    })
+  );
+  Component.displayName = toPascalCase(iconName);
+  return Component;
+};
+const __iconNode = [["path", { d: "M21 12a9 9 0 1 1-6.219-8.56", key: "13zald" }]];
+const LoaderCircle = createLucideIcon("loader-circle", __iconNode);
+const schema = objectType({
+  name: stringType().trim().min(2, "Please enter your name").max(80),
+  phone: stringType().trim().min(7, "Enter a valid phone").max(20),
+  email: stringType().trim().email("Enter a valid email").max(120),
+  sip: stringType().min(1, "Select your SIP capacity"),
+  current: stringType().min(1, "Select an option")
+});
+function LeadModal() {
+  const { open, fund, closeModal } = useLeadModal();
+  const [revealed, setRevealed] = reactExports.useState(false);
+  const [leadId, setLeadId] = reactExports.useState(null);
+  const f = FUNDS$1[fund];
+  reactExports.useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [open]);
+  reactExports.useEffect(() => {
+    (async function() {
+      const cal = await j();
+      cal("on", {
+        action: "bookingSuccessful",
+        callback: async (e) => {
+          if (leadId) {
+            await updateLeadMeetingStatusFn({
+              data: { leadId, booked: true }
+            });
+            const meetingTime = e.detail?.data?.date || e.detail?.data?.startTime;
+            if (meetingTime) {
+              await updateLeadMeetingTimeFn({
+                data: { leadId, meetingTime: new Date(meetingTime).toISOString() }
+              });
+            }
+            toast.success("Meeting scheduled successfully!");
+          }
+        }
+      });
+    })();
+  }, [leadId]);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+    getValues
+  } = useForm({
+    resolver: u(schema),
+    defaultValues: { name: "", phone: "", email: "", sip: "", current: "" }
+  });
+  function onClose() {
+    closeModal();
+    setTimeout(() => {
+      setRevealed(false);
+      reset();
+    }, 200);
+  }
+  async function onSubmit(values) {
+    try {
+      const res = await submitLeadFn({ data: { ...values, fund } });
+      if (res.success && res.leadId) {
+        setLeadId(res.leadId);
+        toast.success("Fund name revealed below");
+        setRevealed(true);
+      } else {
+        toast.error("Failed to submit, please try again.");
+      }
+    } catch (err) {
+      toast.error("An error occurred");
+    }
+  }
+  if (!open) return null;
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    "div",
+    {
+      className: "modal-overlay active",
+      onClick: (e) => {
+        if (e.target === e.currentTarget) onClose();
+      },
+      children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "modal-box", role: "dialog", "aria-modal": "true", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "modal-close", onClick: onClose, "aria-label": "Close", children: "✕" }),
+        !revealed ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "modal-form-area", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "modal-tag", children: f.tag }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "modal-heading", children: "One step away from the fund name" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "modal-sub", children: "Share your details and the fund name is revealed instantly. I'll follow up with a personalised note on why this fund suits different investor profiles." }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { onSubmit: handleSubmit(onSubmit), noValidate: true, children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Your Full Name" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("input", { type: "text", placeholder: "e.g. Ramesh Kumar", ...register("name") }),
+              errors.name && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { style: { color: "#c0392b", fontSize: 11, marginTop: 4 }, children: errors.name.message })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-row", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Phone Number" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("input", { type: "tel", placeholder: "+91 98765 43210", ...register("phone") }),
+                errors.phone && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { style: { color: "#c0392b", fontSize: 11, marginTop: 4 }, children: errors.phone.message })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Email Address" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("input", { type: "email", placeholder: "you@email.com", ...register("email") }),
+                errors.email && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { style: { color: "#c0392b", fontSize: 11, marginTop: 4 }, children: errors.email.message })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-row", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Monthly SIP Capacity" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("select", { ...register("sip"), children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "", children: "Select range" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("option", { children: "Less than ₹5,000" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("option", { children: "₹5,000 – ₹10,000" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("option", { children: "₹10,000 – ₹25,000" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("option", { children: "₹25,000 – ₹50,000" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("option", { children: "₹50,000+" })
+                ] }),
+                errors.sip && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { style: { color: "#c0392b", fontSize: 11, marginTop: 4 }, children: errors.sip.message })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Currently Investing in MFs?" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("select", { ...register("current"), children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "", children: "Select" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("option", { children: "Yes, actively" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("option", { children: "Yes, but not regularly" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("option", { children: "No, just starting" })
+                ] }),
+                errors.current && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { style: { color: "#c0392b", fontSize: 11, marginTop: 4 }, children: errors.current.message })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "button",
+              {
+                className: "submit-btn",
+                type: "submit",
+                disabled: isSubmitting,
+                style: {
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "8px"
+                },
+                children: isSubmitting ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(LoaderCircle, { className: "animate-spin", size: 16 }),
+                  "Processing..."
+                ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: "Reveal Fund Name Now  🔓" })
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "privacy-note", children: "🔒 Your details stay private. No spam. I'll reach out once for a free portfolio conversation — nothing more." })
+          ] })
+        ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "reveal-screen active", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "reveal-icon", children: "✅" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "modal-tag", style: { textAlign: "center", marginBottom: 6 }, children: f.tag }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "reveal-fund-name", children: f.name }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "reveal-fund-cat", children: f.cat }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "reveal-note", children: f.note }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "div",
+            {
+              style: {
+                marginTop: "24px",
+                borderRadius: "8px",
+                overflow: "hidden",
+                height: "400px"
+              },
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "h4",
+                  {
+                    style: {
+                      fontFamily: '"Playfair Display", serif',
+                      fontSize: "20px",
+                      marginBottom: "12px"
+                    },
+                    children: "Book Your Free Consultation"
+                  }
+                ),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  R,
+                  {
+                    calLink: "ashish-kumar-meher/30min",
+                    style: { width: "100%", height: "100%", overflow: "scroll" },
+                    config: {
+                      name: getValues("name"),
+                      email: getValues("email")
+                    }
+                  }
+                )
+              ]
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "reveal-note-small", children: "Pick a time that works for you above to schedule our call." })
+        ] })
+      ] })
+    }
+  );
+}
+function Index() {
+  reactExports.useEffect(() => {
+    document.body.classList.add("shrinivesh");
+    return () => {
+      document.body.classList.remove("shrinivesh");
+    };
+  }, []);
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(LeadModalProvider, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(Navbar, {}),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(Hero, {}),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(TrustBar, {}),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(PortfolioSection, {}),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(RecommendationSection, {}),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(ProcessSection, {}),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(WhyUs, {}),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(Testimonials, {}),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(Manifesto, {}),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(CTASection, {}),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(Footer, {}),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(LeadModal, {})
+  ] });
+}
 export {
-  appendErrors as a,
-  get as g,
-  set as s,
-  useForm as u
+  Index as component
 };

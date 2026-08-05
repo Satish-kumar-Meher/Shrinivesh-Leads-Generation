@@ -1,30 +1,48 @@
+import { a4 as TSS_SERVER_FUNCTION, a5 as createServerFn } from "./server-B624L8BS.mjs";
+import { c as createClient } from "./index-k2CwRawH.mjs";
+import { o as objectType, s as stringType, b as booleanType } from "./types-DLNE6-nO.mjs";
+import "node:async_hooks";
+import "node:stream";
+import "node:stream/web";
+import "util";
+import "crypto";
+import "async_hooks";
+import "stream";
+var createServerRpc = (serverFnMeta, splitImportFn) => {
+  const url = "/_serverFn/" + serverFnMeta.id;
+  return Object.assign(splitImportFn, {
+    url,
+    serverFnMeta,
+    [TSS_SERVER_FUNCTION]: true
+  });
+};
 const textEncoder = new TextEncoder();
 const base64Chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 const base64Lookup = new Uint8Array(256);
 for (let i = 0; i < base64Chars.length; i++) {
   base64Lookup[base64Chars.charCodeAt(i)] = i;
 }
-function decodeBase64(base64) {
-  let bufferLength = Math.ceil(base64.length / 4) * 3;
-  const len = base64.length;
+function decodeBase64(base642) {
+  let bufferLength = Math.ceil(base642.length / 4) * 3;
+  const len = base642.length;
   let p = 0;
-  if (base64.length % 4 === 3) {
+  if (base642.length % 4 === 3) {
     bufferLength--;
-  } else if (base64.length % 4 === 2) {
+  } else if (base642.length % 4 === 2) {
     bufferLength -= 2;
-  } else if (base64[base64.length - 1] === "=") {
+  } else if (base642[base642.length - 1] === "=") {
     bufferLength--;
-    if (base64[base64.length - 2] === "=") {
+    if (base642[base642.length - 2] === "=") {
       bufferLength--;
     }
   }
   const arrayBuffer = new ArrayBuffer(bufferLength);
   const bytes = new Uint8Array(arrayBuffer);
   for (let i = 0; i < len; i += 4) {
-    let encoded1 = base64Lookup[base64.charCodeAt(i)];
-    let encoded2 = base64Lookup[base64.charCodeAt(i + 1)];
-    let encoded3 = base64Lookup[base64.charCodeAt(i + 2)];
-    let encoded4 = base64Lookup[base64.charCodeAt(i + 3)];
+    let encoded1 = base64Lookup[base642.charCodeAt(i)];
+    let encoded2 = base64Lookup[base642.charCodeAt(i + 1)];
+    let encoded3 = base64Lookup[base642.charCodeAt(i + 2)];
+    let encoded4 = base64Lookup[base642.charCodeAt(i + 3)];
     bytes[p++] = encoded1 << 2 | encoded2 >> 4;
     bytes[p++] = (encoded2 & 15) << 4 | encoded3 >> 2;
     bytes[p++] = (encoded3 & 3) << 6 | encoded4 & 63;
@@ -3342,7 +3360,7 @@ function addressParser(str, options) {
   return parsedAddresses;
 }
 function base64ArrayBuffer(arrayBuffer) {
-  var base64 = "";
+  var base642 = "";
   var encodings = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
   var bytes = new Uint8Array(arrayBuffer);
   var byteLength = bytes.byteLength;
@@ -3356,21 +3374,21 @@ function base64ArrayBuffer(arrayBuffer) {
     b = (chunk & 258048) >> 12;
     c = (chunk & 4032) >> 6;
     d = chunk & 63;
-    base64 += encodings[a] + encodings[b] + encodings[c] + encodings[d];
+    base642 += encodings[a] + encodings[b] + encodings[c] + encodings[d];
   }
   if (byteRemainder == 1) {
     chunk = bytes[mainLength];
     a = (chunk & 252) >> 2;
     b = (chunk & 3) << 4;
-    base64 += encodings[a] + encodings[b] + "==";
+    base642 += encodings[a] + encodings[b] + "==";
   } else if (byteRemainder == 2) {
     chunk = bytes[mainLength] << 8 | bytes[mainLength + 1];
     a = (chunk & 64512) >> 10;
     b = (chunk & 1008) >> 4;
     c = (chunk & 15) << 2;
-    base64 += encodings[a] + encodings[b] + encodings[c] + "=";
+    base642 += encodings[a] + encodings[b] + encodings[c] + "=";
   }
-  return base64;
+  return base642;
 }
 const MAX_NESTING_DEPTH = 256;
 const MAX_HEADERS_SIZE = 2 * 1024 * 1024;
@@ -3802,6 +3820,2062 @@ class PostalMime {
     return message;
   }
 }
+var dist = {};
+var timing_safe_equal = {};
+var hasRequiredTiming_safe_equal;
+function requireTiming_safe_equal() {
+  if (hasRequiredTiming_safe_equal) return timing_safe_equal;
+  hasRequiredTiming_safe_equal = 1;
+  Object.defineProperty(timing_safe_equal, "__esModule", { value: true });
+  timing_safe_equal.timingSafeEqual = void 0;
+  function assert(expr, msg = "") {
+    if (!expr) {
+      throw new Error(msg);
+    }
+  }
+  function timingSafeEqual(a, b) {
+    if (a.byteLength !== b.byteLength) {
+      return false;
+    }
+    if (!(a instanceof DataView)) {
+      a = new DataView(ArrayBuffer.isView(a) ? a.buffer : a);
+    }
+    if (!(b instanceof DataView)) {
+      b = new DataView(ArrayBuffer.isView(b) ? b.buffer : b);
+    }
+    assert(a instanceof DataView);
+    assert(b instanceof DataView);
+    const length = a.byteLength;
+    let out = 0;
+    let i = -1;
+    while (++i < length) {
+      out |= a.getUint8(i) ^ b.getUint8(i);
+    }
+    return out === 0;
+  }
+  timing_safe_equal.timingSafeEqual = timingSafeEqual;
+  return timing_safe_equal;
+}
+var base64 = {};
+var hasRequiredBase64;
+function requireBase64() {
+  if (hasRequiredBase64) return base64;
+  hasRequiredBase64 = 1;
+  var __extends = base64 && base64.__extends || /* @__PURE__ */ (function() {
+    var extendStatics = function(d, b) {
+      extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d2, b2) {
+        d2.__proto__ = b2;
+      } || function(d2, b2) {
+        for (var p in b2) if (b2.hasOwnProperty(p)) d2[p] = b2[p];
+      };
+      return extendStatics(d, b);
+    };
+    return function(d, b) {
+      extendStatics(d, b);
+      function __() {
+        this.constructor = d;
+      }
+      d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+  })();
+  Object.defineProperty(base64, "__esModule", { value: true });
+  var INVALID_BYTE = 256;
+  var Coder = (
+    /** @class */
+    (function() {
+      function Coder2(_paddingCharacter) {
+        if (_paddingCharacter === void 0) {
+          _paddingCharacter = "=";
+        }
+        this._paddingCharacter = _paddingCharacter;
+      }
+      Coder2.prototype.encodedLength = function(length) {
+        if (!this._paddingCharacter) {
+          return (length * 8 + 5) / 6 | 0;
+        }
+        return (length + 2) / 3 * 4 | 0;
+      };
+      Coder2.prototype.encode = function(data) {
+        var out = "";
+        var i = 0;
+        for (; i < data.length - 2; i += 3) {
+          var c = data[i] << 16 | data[i + 1] << 8 | data[i + 2];
+          out += this._encodeByte(c >>> 3 * 6 & 63);
+          out += this._encodeByte(c >>> 2 * 6 & 63);
+          out += this._encodeByte(c >>> 1 * 6 & 63);
+          out += this._encodeByte(c >>> 0 * 6 & 63);
+        }
+        var left = data.length - i;
+        if (left > 0) {
+          var c = data[i] << 16 | (left === 2 ? data[i + 1] << 8 : 0);
+          out += this._encodeByte(c >>> 3 * 6 & 63);
+          out += this._encodeByte(c >>> 2 * 6 & 63);
+          if (left === 2) {
+            out += this._encodeByte(c >>> 1 * 6 & 63);
+          } else {
+            out += this._paddingCharacter || "";
+          }
+          out += this._paddingCharacter || "";
+        }
+        return out;
+      };
+      Coder2.prototype.maxDecodedLength = function(length) {
+        if (!this._paddingCharacter) {
+          return (length * 6 + 7) / 8 | 0;
+        }
+        return length / 4 * 3 | 0;
+      };
+      Coder2.prototype.decodedLength = function(s) {
+        return this.maxDecodedLength(s.length - this._getPaddingLength(s));
+      };
+      Coder2.prototype.decode = function(s) {
+        if (s.length === 0) {
+          return new Uint8Array(0);
+        }
+        var paddingLength = this._getPaddingLength(s);
+        var length = s.length - paddingLength;
+        var out = new Uint8Array(this.maxDecodedLength(length));
+        var op = 0;
+        var i = 0;
+        var haveBad = 0;
+        var v0 = 0, v1 = 0, v2 = 0, v3 = 0;
+        for (; i < length - 4; i += 4) {
+          v0 = this._decodeChar(s.charCodeAt(i + 0));
+          v1 = this._decodeChar(s.charCodeAt(i + 1));
+          v2 = this._decodeChar(s.charCodeAt(i + 2));
+          v3 = this._decodeChar(s.charCodeAt(i + 3));
+          out[op++] = v0 << 2 | v1 >>> 4;
+          out[op++] = v1 << 4 | v2 >>> 2;
+          out[op++] = v2 << 6 | v3;
+          haveBad |= v0 & INVALID_BYTE;
+          haveBad |= v1 & INVALID_BYTE;
+          haveBad |= v2 & INVALID_BYTE;
+          haveBad |= v3 & INVALID_BYTE;
+        }
+        if (i < length - 1) {
+          v0 = this._decodeChar(s.charCodeAt(i));
+          v1 = this._decodeChar(s.charCodeAt(i + 1));
+          out[op++] = v0 << 2 | v1 >>> 4;
+          haveBad |= v0 & INVALID_BYTE;
+          haveBad |= v1 & INVALID_BYTE;
+        }
+        if (i < length - 2) {
+          v2 = this._decodeChar(s.charCodeAt(i + 2));
+          out[op++] = v1 << 4 | v2 >>> 2;
+          haveBad |= v2 & INVALID_BYTE;
+        }
+        if (i < length - 3) {
+          v3 = this._decodeChar(s.charCodeAt(i + 3));
+          out[op++] = v2 << 6 | v3;
+          haveBad |= v3 & INVALID_BYTE;
+        }
+        if (haveBad !== 0) {
+          throw new Error("Base64Coder: incorrect characters for decoding");
+        }
+        return out;
+      };
+      Coder2.prototype._encodeByte = function(b) {
+        var result = b;
+        result += 65;
+        result += 25 - b >>> 8 & 0 - 65 - 26 + 97;
+        result += 51 - b >>> 8 & 26 - 97 - 52 + 48;
+        result += 61 - b >>> 8 & 52 - 48 - 62 + 43;
+        result += 62 - b >>> 8 & 62 - 43 - 63 + 47;
+        return String.fromCharCode(result);
+      };
+      Coder2.prototype._decodeChar = function(c) {
+        var result = INVALID_BYTE;
+        result += (42 - c & c - 44) >>> 8 & -INVALID_BYTE + c - 43 + 62;
+        result += (46 - c & c - 48) >>> 8 & -INVALID_BYTE + c - 47 + 63;
+        result += (47 - c & c - 58) >>> 8 & -INVALID_BYTE + c - 48 + 52;
+        result += (64 - c & c - 91) >>> 8 & -INVALID_BYTE + c - 65 + 0;
+        result += (96 - c & c - 123) >>> 8 & -INVALID_BYTE + c - 97 + 26;
+        return result;
+      };
+      Coder2.prototype._getPaddingLength = function(s) {
+        var paddingLength = 0;
+        if (this._paddingCharacter) {
+          for (var i = s.length - 1; i >= 0; i--) {
+            if (s[i] !== this._paddingCharacter) {
+              break;
+            }
+            paddingLength++;
+          }
+          if (s.length < 4 || paddingLength > 2) {
+            throw new Error("Base64Coder: incorrect padding");
+          }
+        }
+        return paddingLength;
+      };
+      return Coder2;
+    })()
+  );
+  base64.Coder = Coder;
+  var stdCoder = new Coder();
+  function encode(data) {
+    return stdCoder.encode(data);
+  }
+  base64.encode = encode;
+  function decode(s) {
+    return stdCoder.decode(s);
+  }
+  base64.decode = decode;
+  var URLSafeCoder = (
+    /** @class */
+    (function(_super) {
+      __extends(URLSafeCoder2, _super);
+      function URLSafeCoder2() {
+        return _super !== null && _super.apply(this, arguments) || this;
+      }
+      URLSafeCoder2.prototype._encodeByte = function(b) {
+        var result = b;
+        result += 65;
+        result += 25 - b >>> 8 & 0 - 65 - 26 + 97;
+        result += 51 - b >>> 8 & 26 - 97 - 52 + 48;
+        result += 61 - b >>> 8 & 52 - 48 - 62 + 45;
+        result += 62 - b >>> 8 & 62 - 45 - 63 + 95;
+        return String.fromCharCode(result);
+      };
+      URLSafeCoder2.prototype._decodeChar = function(c) {
+        var result = INVALID_BYTE;
+        result += (44 - c & c - 46) >>> 8 & -INVALID_BYTE + c - 45 + 62;
+        result += (94 - c & c - 96) >>> 8 & -INVALID_BYTE + c - 95 + 63;
+        result += (47 - c & c - 58) >>> 8 & -INVALID_BYTE + c - 48 + 52;
+        result += (64 - c & c - 91) >>> 8 & -INVALID_BYTE + c - 65 + 0;
+        result += (96 - c & c - 123) >>> 8 & -INVALID_BYTE + c - 97 + 26;
+        return result;
+      };
+      return URLSafeCoder2;
+    })(Coder)
+  );
+  base64.URLSafeCoder = URLSafeCoder;
+  var urlSafeCoder = new URLSafeCoder();
+  function encodeURLSafe(data) {
+    return urlSafeCoder.encode(data);
+  }
+  base64.encodeURLSafe = encodeURLSafe;
+  function decodeURLSafe(s) {
+    return urlSafeCoder.decode(s);
+  }
+  base64.decodeURLSafe = decodeURLSafe;
+  base64.encodedLength = function(length) {
+    return stdCoder.encodedLength(length);
+  };
+  base64.maxDecodedLength = function(length) {
+    return stdCoder.maxDecodedLength(length);
+  };
+  base64.decodedLength = function(s) {
+    return stdCoder.decodedLength(s);
+  };
+  return base64;
+}
+var sha256$1 = { exports: {} };
+var sha256 = sha256$1.exports;
+var hasRequiredSha256;
+function requireSha256() {
+  if (hasRequiredSha256) return sha256$1.exports;
+  hasRequiredSha256 = 1;
+  (function(module) {
+    (function(root, factory) {
+      var exports = {};
+      factory(exports);
+      var sha2562 = exports["default"];
+      for (var k in exports) {
+        sha2562[k] = exports[k];
+      }
+      {
+        module.exports = sha2562;
+      }
+    })(sha256, function(exports) {
+      exports.__esModule = true;
+      exports.digestLength = 32;
+      exports.blockSize = 64;
+      var K = new Uint32Array([
+        1116352408,
+        1899447441,
+        3049323471,
+        3921009573,
+        961987163,
+        1508970993,
+        2453635748,
+        2870763221,
+        3624381080,
+        310598401,
+        607225278,
+        1426881987,
+        1925078388,
+        2162078206,
+        2614888103,
+        3248222580,
+        3835390401,
+        4022224774,
+        264347078,
+        604807628,
+        770255983,
+        1249150122,
+        1555081692,
+        1996064986,
+        2554220882,
+        2821834349,
+        2952996808,
+        3210313671,
+        3336571891,
+        3584528711,
+        113926993,
+        338241895,
+        666307205,
+        773529912,
+        1294757372,
+        1396182291,
+        1695183700,
+        1986661051,
+        2177026350,
+        2456956037,
+        2730485921,
+        2820302411,
+        3259730800,
+        3345764771,
+        3516065817,
+        3600352804,
+        4094571909,
+        275423344,
+        430227734,
+        506948616,
+        659060556,
+        883997877,
+        958139571,
+        1322822218,
+        1537002063,
+        1747873779,
+        1955562222,
+        2024104815,
+        2227730452,
+        2361852424,
+        2428436474,
+        2756734187,
+        3204031479,
+        3329325298
+      ]);
+      function hashBlocks(w, v, p, pos, len) {
+        var a, b, c, d, e, f, g, h, u, i, j, t1, t2;
+        while (len >= 64) {
+          a = v[0];
+          b = v[1];
+          c = v[2];
+          d = v[3];
+          e = v[4];
+          f = v[5];
+          g = v[6];
+          h = v[7];
+          for (i = 0; i < 16; i++) {
+            j = pos + i * 4;
+            w[i] = (p[j] & 255) << 24 | (p[j + 1] & 255) << 16 | (p[j + 2] & 255) << 8 | p[j + 3] & 255;
+          }
+          for (i = 16; i < 64; i++) {
+            u = w[i - 2];
+            t1 = (u >>> 17 | u << 32 - 17) ^ (u >>> 19 | u << 32 - 19) ^ u >>> 10;
+            u = w[i - 15];
+            t2 = (u >>> 7 | u << 32 - 7) ^ (u >>> 18 | u << 32 - 18) ^ u >>> 3;
+            w[i] = (t1 + w[i - 7] | 0) + (t2 + w[i - 16] | 0);
+          }
+          for (i = 0; i < 64; i++) {
+            t1 = (((e >>> 6 | e << 32 - 6) ^ (e >>> 11 | e << 32 - 11) ^ (e >>> 25 | e << 32 - 25)) + (e & f ^ ~e & g) | 0) + (h + (K[i] + w[i] | 0) | 0) | 0;
+            t2 = ((a >>> 2 | a << 32 - 2) ^ (a >>> 13 | a << 32 - 13) ^ (a >>> 22 | a << 32 - 22)) + (a & b ^ a & c ^ b & c) | 0;
+            h = g;
+            g = f;
+            f = e;
+            e = d + t1 | 0;
+            d = c;
+            c = b;
+            b = a;
+            a = t1 + t2 | 0;
+          }
+          v[0] += a;
+          v[1] += b;
+          v[2] += c;
+          v[3] += d;
+          v[4] += e;
+          v[5] += f;
+          v[6] += g;
+          v[7] += h;
+          pos += 64;
+          len -= 64;
+        }
+        return pos;
+      }
+      var Hash = (
+        /** @class */
+        (function() {
+          function Hash2() {
+            this.digestLength = exports.digestLength;
+            this.blockSize = exports.blockSize;
+            this.state = new Int32Array(8);
+            this.temp = new Int32Array(64);
+            this.buffer = new Uint8Array(128);
+            this.bufferLength = 0;
+            this.bytesHashed = 0;
+            this.finished = false;
+            this.reset();
+          }
+          Hash2.prototype.reset = function() {
+            this.state[0] = 1779033703;
+            this.state[1] = 3144134277;
+            this.state[2] = 1013904242;
+            this.state[3] = 2773480762;
+            this.state[4] = 1359893119;
+            this.state[5] = 2600822924;
+            this.state[6] = 528734635;
+            this.state[7] = 1541459225;
+            this.bufferLength = 0;
+            this.bytesHashed = 0;
+            this.finished = false;
+            return this;
+          };
+          Hash2.prototype.clean = function() {
+            for (var i = 0; i < this.buffer.length; i++) {
+              this.buffer[i] = 0;
+            }
+            for (var i = 0; i < this.temp.length; i++) {
+              this.temp[i] = 0;
+            }
+            this.reset();
+          };
+          Hash2.prototype.update = function(data, dataLength) {
+            if (dataLength === void 0) {
+              dataLength = data.length;
+            }
+            if (this.finished) {
+              throw new Error("SHA256: can't update because hash was finished.");
+            }
+            var dataPos = 0;
+            this.bytesHashed += dataLength;
+            if (this.bufferLength > 0) {
+              while (this.bufferLength < 64 && dataLength > 0) {
+                this.buffer[this.bufferLength++] = data[dataPos++];
+                dataLength--;
+              }
+              if (this.bufferLength === 64) {
+                hashBlocks(this.temp, this.state, this.buffer, 0, 64);
+                this.bufferLength = 0;
+              }
+            }
+            if (dataLength >= 64) {
+              dataPos = hashBlocks(this.temp, this.state, data, dataPos, dataLength);
+              dataLength %= 64;
+            }
+            while (dataLength > 0) {
+              this.buffer[this.bufferLength++] = data[dataPos++];
+              dataLength--;
+            }
+            return this;
+          };
+          Hash2.prototype.finish = function(out) {
+            if (!this.finished) {
+              var bytesHashed = this.bytesHashed;
+              var left = this.bufferLength;
+              var bitLenHi = bytesHashed / 536870912 | 0;
+              var bitLenLo = bytesHashed << 3;
+              var padLength = bytesHashed % 64 < 56 ? 64 : 128;
+              this.buffer[left] = 128;
+              for (var i = left + 1; i < padLength - 8; i++) {
+                this.buffer[i] = 0;
+              }
+              this.buffer[padLength - 8] = bitLenHi >>> 24 & 255;
+              this.buffer[padLength - 7] = bitLenHi >>> 16 & 255;
+              this.buffer[padLength - 6] = bitLenHi >>> 8 & 255;
+              this.buffer[padLength - 5] = bitLenHi >>> 0 & 255;
+              this.buffer[padLength - 4] = bitLenLo >>> 24 & 255;
+              this.buffer[padLength - 3] = bitLenLo >>> 16 & 255;
+              this.buffer[padLength - 2] = bitLenLo >>> 8 & 255;
+              this.buffer[padLength - 1] = bitLenLo >>> 0 & 255;
+              hashBlocks(this.temp, this.state, this.buffer, 0, padLength);
+              this.finished = true;
+            }
+            for (var i = 0; i < 8; i++) {
+              out[i * 4 + 0] = this.state[i] >>> 24 & 255;
+              out[i * 4 + 1] = this.state[i] >>> 16 & 255;
+              out[i * 4 + 2] = this.state[i] >>> 8 & 255;
+              out[i * 4 + 3] = this.state[i] >>> 0 & 255;
+            }
+            return this;
+          };
+          Hash2.prototype.digest = function() {
+            var out = new Uint8Array(this.digestLength);
+            this.finish(out);
+            return out;
+          };
+          Hash2.prototype._saveState = function(out) {
+            for (var i = 0; i < this.state.length; i++) {
+              out[i] = this.state[i];
+            }
+          };
+          Hash2.prototype._restoreState = function(from, bytesHashed) {
+            for (var i = 0; i < this.state.length; i++) {
+              this.state[i] = from[i];
+            }
+            this.bytesHashed = bytesHashed;
+            this.finished = false;
+            this.bufferLength = 0;
+          };
+          return Hash2;
+        })()
+      );
+      exports.Hash = Hash;
+      var HMAC = (
+        /** @class */
+        (function() {
+          function HMAC2(key) {
+            this.inner = new Hash();
+            this.outer = new Hash();
+            this.blockSize = this.inner.blockSize;
+            this.digestLength = this.inner.digestLength;
+            var pad = new Uint8Array(this.blockSize);
+            if (key.length > this.blockSize) {
+              new Hash().update(key).finish(pad).clean();
+            } else {
+              for (var i = 0; i < key.length; i++) {
+                pad[i] = key[i];
+              }
+            }
+            for (var i = 0; i < pad.length; i++) {
+              pad[i] ^= 54;
+            }
+            this.inner.update(pad);
+            for (var i = 0; i < pad.length; i++) {
+              pad[i] ^= 54 ^ 92;
+            }
+            this.outer.update(pad);
+            this.istate = new Uint32Array(8);
+            this.ostate = new Uint32Array(8);
+            this.inner._saveState(this.istate);
+            this.outer._saveState(this.ostate);
+            for (var i = 0; i < pad.length; i++) {
+              pad[i] = 0;
+            }
+          }
+          HMAC2.prototype.reset = function() {
+            this.inner._restoreState(this.istate, this.inner.blockSize);
+            this.outer._restoreState(this.ostate, this.outer.blockSize);
+            return this;
+          };
+          HMAC2.prototype.clean = function() {
+            for (var i = 0; i < this.istate.length; i++) {
+              this.ostate[i] = this.istate[i] = 0;
+            }
+            this.inner.clean();
+            this.outer.clean();
+          };
+          HMAC2.prototype.update = function(data) {
+            this.inner.update(data);
+            return this;
+          };
+          HMAC2.prototype.finish = function(out) {
+            if (this.outer.finished) {
+              this.outer.finish(out);
+            } else {
+              this.inner.finish(out);
+              this.outer.update(out, this.digestLength).finish(out);
+            }
+            return this;
+          };
+          HMAC2.prototype.digest = function() {
+            var out = new Uint8Array(this.digestLength);
+            this.finish(out);
+            return out;
+          };
+          return HMAC2;
+        })()
+      );
+      exports.HMAC = HMAC;
+      function hash(data) {
+        var h = new Hash().update(data);
+        var digest = h.digest();
+        h.clean();
+        return digest;
+      }
+      exports.hash = hash;
+      exports["default"] = hash;
+      function hmac(key, data) {
+        var h = new HMAC(key).update(data);
+        var digest = h.digest();
+        h.clean();
+        return digest;
+      }
+      exports.hmac = hmac;
+      function fillBuffer(buffer, hmac2, info, counter) {
+        var num = counter[0];
+        if (num === 0) {
+          throw new Error("hkdf: cannot expand more");
+        }
+        hmac2.reset();
+        if (num > 1) {
+          hmac2.update(buffer);
+        }
+        if (info) {
+          hmac2.update(info);
+        }
+        hmac2.update(counter);
+        hmac2.finish(buffer);
+        counter[0]++;
+      }
+      var hkdfSalt = new Uint8Array(exports.digestLength);
+      function hkdf(key, salt, info, length) {
+        if (salt === void 0) {
+          salt = hkdfSalt;
+        }
+        if (length === void 0) {
+          length = 32;
+        }
+        var counter = new Uint8Array([1]);
+        var okm = hmac(salt, key);
+        var hmac_ = new HMAC(okm);
+        var buffer = new Uint8Array(hmac_.digestLength);
+        var bufpos = buffer.length;
+        var out = new Uint8Array(length);
+        for (var i = 0; i < length; i++) {
+          if (bufpos === buffer.length) {
+            fillBuffer(buffer, hmac_, info, counter);
+            bufpos = 0;
+          }
+          out[i] = buffer[bufpos++];
+        }
+        hmac_.clean();
+        buffer.fill(0);
+        counter.fill(0);
+        return out;
+      }
+      exports.hkdf = hkdf;
+      function pbkdf2(password, salt, iterations, dkLen) {
+        var prf = new HMAC(password);
+        var len = prf.digestLength;
+        var ctr = new Uint8Array(4);
+        var t = new Uint8Array(len);
+        var u = new Uint8Array(len);
+        var dk = new Uint8Array(dkLen);
+        for (var i = 0; i * len < dkLen; i++) {
+          var c = i + 1;
+          ctr[0] = c >>> 24 & 255;
+          ctr[1] = c >>> 16 & 255;
+          ctr[2] = c >>> 8 & 255;
+          ctr[3] = c >>> 0 & 255;
+          prf.reset();
+          prf.update(salt);
+          prf.update(ctr);
+          prf.finish(u);
+          for (var j = 0; j < len; j++) {
+            t[j] = u[j];
+          }
+          for (var j = 2; j <= iterations; j++) {
+            prf.reset();
+            prf.update(u).finish(u);
+            for (var k = 0; k < len; k++) {
+              t[k] ^= u[k];
+            }
+          }
+          for (var j = 0; j < len && i * len + j < dkLen; j++) {
+            dk[i * len + j] = t[j];
+          }
+        }
+        for (var i = 0; i < len; i++) {
+          t[i] = u[i] = 0;
+        }
+        for (var i = 0; i < 4; i++) {
+          ctr[i] = 0;
+        }
+        prf.clean();
+        return dk;
+      }
+      exports.pbkdf2 = pbkdf2;
+    });
+  })(sha256$1);
+  return sha256$1.exports;
+}
+var hasRequiredDist;
+function requireDist() {
+  if (hasRequiredDist) return dist;
+  hasRequiredDist = 1;
+  Object.defineProperty(dist, "__esModule", { value: true });
+  dist.Webhook = dist.WebhookVerificationError = void 0;
+  const timing_safe_equal_1 = requireTiming_safe_equal();
+  const base642 = requireBase64();
+  const sha2562 = requireSha256();
+  const WEBHOOK_TOLERANCE_IN_SECONDS = 5 * 60;
+  class ExtendableError extends Error {
+    constructor(message) {
+      super(message);
+      Object.setPrototypeOf(this, ExtendableError.prototype);
+      this.name = "ExtendableError";
+      this.stack = new Error(message).stack;
+    }
+  }
+  class WebhookVerificationError extends ExtendableError {
+    constructor(message) {
+      super(message);
+      Object.setPrototypeOf(this, WebhookVerificationError.prototype);
+      this.name = "WebhookVerificationError";
+    }
+  }
+  dist.WebhookVerificationError = WebhookVerificationError;
+  class Webhook {
+    constructor(secret, options) {
+      if (!secret) {
+        throw new Error("Secret can't be empty.");
+      }
+      if ((options === null || options === void 0 ? void 0 : options.format) === "raw") {
+        if (secret instanceof Uint8Array) {
+          this.key = secret;
+        } else {
+          this.key = Uint8Array.from(secret, (c) => c.charCodeAt(0));
+        }
+      } else {
+        if (typeof secret !== "string") {
+          throw new Error("Expected secret to be of type string");
+        }
+        if (secret.startsWith(Webhook.prefix)) {
+          secret = secret.substring(Webhook.prefix.length);
+        }
+        this.key = base642.decode(secret);
+      }
+    }
+    verify(payload, headers_) {
+      const headers = {};
+      for (const key of Object.keys(headers_)) {
+        headers[key.toLowerCase()] = headers_[key];
+      }
+      const msgId = headers["webhook-id"];
+      const msgSignature = headers["webhook-signature"];
+      const msgTimestamp = headers["webhook-timestamp"];
+      if (!msgSignature || !msgId || !msgTimestamp) {
+        throw new WebhookVerificationError("Missing required headers");
+      }
+      const timestamp = this.verifyTimestamp(msgTimestamp);
+      const computedSignature = this.sign(msgId, timestamp, payload);
+      const expectedSignature = computedSignature.split(",")[1];
+      const passedSignatures = msgSignature.split(" ");
+      const encoder = new globalThis.TextEncoder();
+      for (const versionedSignature of passedSignatures) {
+        const [version2, signature] = versionedSignature.split(",");
+        if (version2 !== "v1") {
+          continue;
+        }
+        if ((0, timing_safe_equal_1.timingSafeEqual)(encoder.encode(signature), encoder.encode(expectedSignature))) {
+          return JSON.parse(payload.toString());
+        }
+      }
+      throw new WebhookVerificationError("No matching signature found");
+    }
+    sign(msgId, timestamp, payload) {
+      if (typeof payload === "string") ;
+      else if (payload.constructor.name === "Buffer") {
+        payload = payload.toString();
+      } else {
+        throw new Error("Expected payload to be of type string or Buffer.");
+      }
+      const encoder = new TextEncoder();
+      const timestampNumber = Math.floor(timestamp.getTime() / 1e3);
+      const toSign = encoder.encode(`${msgId}.${timestampNumber}.${payload}`);
+      const expectedSignature = base642.encode(sha2562.hmac(this.key, toSign));
+      return `v1,${expectedSignature}`;
+    }
+    verifyTimestamp(timestampHeader) {
+      const now = Math.floor(Date.now() / 1e3);
+      const timestamp = parseInt(timestampHeader, 10);
+      if (isNaN(timestamp)) {
+        throw new WebhookVerificationError("Invalid Signature Headers");
+      }
+      if (now - timestamp > WEBHOOK_TOLERANCE_IN_SECONDS) {
+        throw new WebhookVerificationError("Message timestamp too old");
+      }
+      if (timestamp > now + WEBHOOK_TOLERANCE_IN_SECONDS) {
+        throw new WebhookVerificationError("Message timestamp too new");
+      }
+      return new Date(timestamp * 1e3);
+    }
+  }
+  dist.Webhook = Webhook;
+  Webhook.prefix = "whsec_";
+  return dist;
+}
+var distExports = requireDist();
+var version = "6.12.4";
+function buildPaginationQuery(options) {
+  const searchParams = new URLSearchParams();
+  if (options.limit !== void 0) searchParams.set("limit", options.limit.toString());
+  if ("after" in options && options.after !== void 0) searchParams.set("after", options.after);
+  if ("before" in options && options.before !== void 0) searchParams.set("before", options.before);
+  return searchParams.toString();
+}
+var ApiKeys = class {
+  constructor(resend2) {
+    this.resend = resend2;
+  }
+  async create(payload, options = {}) {
+    return await this.resend.post("/api-keys", payload, options);
+  }
+  async list(options = {}) {
+    const queryString = buildPaginationQuery(options);
+    const url = queryString ? `/api-keys?${queryString}` : "/api-keys";
+    return await this.resend.get(url);
+  }
+  async remove(id) {
+    return await this.resend.delete(`/api-keys/${id}`);
+  }
+};
+var AutomationRuns = class {
+  constructor(resend2) {
+    this.resend = resend2;
+  }
+  async get(options) {
+    return await this.resend.get(`/automations/${options.automationId}/runs/${options.runId}`);
+  }
+  async list(options) {
+    const queryString = buildPaginationQuery(options);
+    const searchParams = new URLSearchParams(queryString);
+    if (options.status) {
+      const statusValue = Array.isArray(options.status) ? options.status.join(",") : options.status;
+      searchParams.set("status", statusValue);
+    }
+    const qs = searchParams.toString();
+    const url = qs ? `/automations/${options.automationId}/runs?${qs}` : `/automations/${options.automationId}/runs`;
+    return await this.resend.get(url);
+  }
+};
+function parseStepConfig(step) {
+  switch (step.type) {
+    case "trigger":
+      return {
+        key: step.key,
+        type: step.type,
+        config: { event_name: step.config.eventName }
+      };
+    case "delay":
+      return {
+        key: step.key,
+        type: step.type,
+        config: step.config
+      };
+    case "send_email":
+      return {
+        key: step.key,
+        type: step.type,
+        config: {
+          template: step.config.template,
+          subject: step.config.subject,
+          from: step.config.from,
+          reply_to: step.config.replyTo
+        }
+      };
+    case "wait_for_event":
+      return {
+        key: step.key,
+        type: step.type,
+        config: {
+          event_name: step.config.eventName,
+          timeout: step.config.timeout,
+          filter_rule: step.config.filterRule
+        }
+      };
+    case "condition":
+      return {
+        key: step.key,
+        type: step.type,
+        config: step.config
+      };
+    case "contact_update":
+      return {
+        key: step.key,
+        type: step.type,
+        config: {
+          first_name: step.config.firstName,
+          last_name: step.config.lastName,
+          unsubscribed: step.config.unsubscribed,
+          properties: step.config.properties
+        }
+      };
+    case "contact_delete":
+      return {
+        key: step.key,
+        type: step.type,
+        config: step.config
+      };
+    case "add_to_segment":
+      return {
+        key: step.key,
+        type: step.type,
+        config: { segment_id: step.config.segmentId }
+      };
+  }
+}
+function parseConnection(connection) {
+  return {
+    from: connection.from,
+    to: connection.to,
+    type: connection.type
+  };
+}
+function parseAutomationToApiOptions(automation) {
+  return {
+    name: automation.name,
+    status: automation.status,
+    steps: automation.steps.map(parseStepConfig),
+    connections: automation.connections.map(parseConnection)
+  };
+}
+function parseEventToApiOptions(event) {
+  return {
+    event: event.event,
+    contact_id: event.contactId,
+    email: event.email,
+    payload: event.payload
+  };
+}
+var Automations = class {
+  constructor(resend2) {
+    this.resend = resend2;
+    this.runs = new AutomationRuns(this.resend);
+  }
+  async create(payload) {
+    return await this.resend.post("/automations", parseAutomationToApiOptions(payload));
+  }
+  async list(options = {}) {
+    const params = [buildPaginationQuery(options)];
+    if (options.status) params.push(`status=${encodeURIComponent(options.status)}`);
+    const qs = params.filter(Boolean).join("&");
+    const url = qs ? `/automations?${qs}` : "/automations";
+    return await this.resend.get(url);
+  }
+  async get(id) {
+    return await this.resend.get(`/automations/${id}`);
+  }
+  async remove(id) {
+    return await this.resend.delete(`/automations/${id}`);
+  }
+  async update(id, payload) {
+    const apiPayload = {};
+    if (payload.name !== void 0) apiPayload.name = payload.name;
+    if (payload.status !== void 0) apiPayload.status = payload.status;
+    if (payload.steps !== void 0) apiPayload.steps = payload.steps.map(parseStepConfig);
+    if (payload.connections !== void 0) apiPayload.connections = payload.connections.map(parseConnection);
+    return await this.resend.patch(`/automations/${id}`, apiPayload);
+  }
+  async stop(id) {
+    return await this.resend.post(`/automations/${id}/stop`);
+  }
+};
+function parseAttachments(attachments) {
+  return attachments?.map((attachment) => ({
+    content: attachment.content,
+    filename: attachment.filename,
+    path: attachment.path,
+    content_type: attachment.contentType,
+    content_id: attachment.contentId
+  }));
+}
+function parseEmailToApiOptions(email) {
+  return {
+    attachments: parseAttachments(email.attachments),
+    bcc: email.bcc,
+    cc: email.cc,
+    from: email.from,
+    headers: email.headers,
+    html: email.html,
+    reply_to: email.replyTo,
+    scheduled_at: email.scheduledAt,
+    subject: email.subject,
+    tags: email.tags,
+    text: email.text,
+    to: email.to,
+    template: email.template ? {
+      id: email.template.id,
+      variables: email.template.variables
+    } : void 0,
+    topic_id: email.topicId
+  };
+}
+async function render(node) {
+  let render2;
+  try {
+    ({ render: render2 } = await import("./render_resend_false-MiC__Smr.mjs"));
+  } catch {
+    throw new Error("Failed to render React component. Make sure to install `@react-email/render` or `@react-email/components`.");
+  }
+  return render2(node);
+}
+var Batch = class {
+  constructor(resend2) {
+    this.resend = resend2;
+  }
+  async send(payload, options) {
+    return this.create(payload, options);
+  }
+  async create(payload, options) {
+    const emails = [];
+    for (const email of payload) {
+      if (email.react) {
+        email.html = await render(email.react);
+        email.react = void 0;
+      }
+      emails.push(parseEmailToApiOptions(email));
+    }
+    return await this.resend.post("/emails/batch", emails, {
+      ...options,
+      headers: {
+        "x-batch-validation": options?.batchValidation ?? "strict",
+        ...options?.headers
+      }
+    });
+  }
+};
+var Broadcasts = class {
+  constructor(resend2) {
+    this.resend = resend2;
+  }
+  async create(payload, options = {}) {
+    const html = payload.react ? await render(payload.react) : payload.html;
+    return await this.resend.post("/broadcasts", {
+      name: payload.name,
+      segment_id: payload.segmentId,
+      audience_id: payload.audienceId,
+      preview_text: payload.previewText,
+      from: payload.from,
+      html,
+      reply_to: payload.replyTo,
+      subject: payload.subject,
+      text: payload.text,
+      topic_id: payload.topicId,
+      send: payload.send,
+      scheduled_at: payload.scheduledAt
+    }, options);
+  }
+  async send(id, payload) {
+    return await this.resend.post(`/broadcasts/${id}/send`, { scheduled_at: payload?.scheduledAt });
+  }
+  async list(options = {}) {
+    const queryString = buildPaginationQuery(options);
+    const url = queryString ? `/broadcasts?${queryString}` : "/broadcasts";
+    return await this.resend.get(url);
+  }
+  async get(id) {
+    return await this.resend.get(`/broadcasts/${id}`);
+  }
+  async remove(id) {
+    return await this.resend.delete(`/broadcasts/${id}`);
+  }
+  async update(id, payload) {
+    const html = payload.react ? await render(payload.react) : payload.html;
+    return await this.resend.patch(`/broadcasts/${id}`, {
+      name: payload.name,
+      segment_id: payload.segmentId,
+      audience_id: payload.audienceId,
+      from: payload.from,
+      html,
+      text: payload.text,
+      subject: payload.subject,
+      reply_to: payload.replyTo,
+      preview_text: payload.previewText,
+      topic_id: payload.topicId
+    });
+  }
+};
+function parseContactPropertyFromApi(contactProperty) {
+  return {
+    id: contactProperty.id,
+    key: contactProperty.key,
+    createdAt: contactProperty.created_at,
+    type: contactProperty.type,
+    fallbackValue: contactProperty.fallback_value
+  };
+}
+function parseContactPropertyToApiOptions(contactProperty) {
+  if ("key" in contactProperty) return {
+    key: contactProperty.key,
+    type: contactProperty.type,
+    fallback_value: contactProperty.fallbackValue
+  };
+  return { fallback_value: contactProperty.fallbackValue };
+}
+var ContactProperties = class {
+  constructor(resend2) {
+    this.resend = resend2;
+  }
+  async create(options) {
+    const apiOptions = parseContactPropertyToApiOptions(options);
+    return await this.resend.post("/contact-properties", apiOptions);
+  }
+  async list(options = {}) {
+    const queryString = buildPaginationQuery(options);
+    const url = queryString ? `/contact-properties?${queryString}` : "/contact-properties";
+    const response = await this.resend.get(url);
+    if (response.data) return {
+      data: {
+        ...response.data,
+        data: response.data.data.map((apiContactProperty) => parseContactPropertyFromApi(apiContactProperty))
+      },
+      headers: response.headers,
+      error: null
+    };
+    return response;
+  }
+  async get(id) {
+    if (!id) return {
+      data: null,
+      headers: null,
+      error: {
+        message: "Missing `id` field.",
+        statusCode: null,
+        name: "missing_required_field"
+      }
+    };
+    const response = await this.resend.get(`/contact-properties/${id}`);
+    if (response.data) return {
+      data: {
+        object: "contact_property",
+        ...parseContactPropertyFromApi(response.data)
+      },
+      headers: response.headers,
+      error: null
+    };
+    return response;
+  }
+  async update(payload) {
+    if (!payload.id) return {
+      data: null,
+      headers: null,
+      error: {
+        message: "Missing `id` field.",
+        statusCode: null,
+        name: "missing_required_field"
+      }
+    };
+    const apiOptions = parseContactPropertyToApiOptions(payload);
+    return await this.resend.patch(`/contact-properties/${payload.id}`, apiOptions);
+  }
+  async remove(id) {
+    if (!id) return {
+      data: null,
+      headers: null,
+      error: {
+        message: "Missing `id` field.",
+        statusCode: null,
+        name: "missing_required_field"
+      }
+    };
+    return await this.resend.delete(`/contact-properties/${id}`);
+  }
+};
+var ContactSegments = class {
+  constructor(resend2) {
+    this.resend = resend2;
+  }
+  async list(options) {
+    if (!options.contactId && !options.email) return {
+      data: null,
+      headers: null,
+      error: {
+        message: "Missing `id` or `email` field.",
+        statusCode: null,
+        name: "missing_required_field"
+      }
+    };
+    const identifier = options.email ? options.email : options.contactId;
+    const queryString = buildPaginationQuery(options);
+    const url = queryString ? `/contacts/${identifier}/segments?${queryString}` : `/contacts/${identifier}/segments`;
+    return await this.resend.get(url);
+  }
+  async add(options) {
+    if (!options.contactId && !options.email) return {
+      data: null,
+      headers: null,
+      error: {
+        message: "Missing `id` or `email` field.",
+        statusCode: null,
+        name: "missing_required_field"
+      }
+    };
+    const identifier = options.email ? options.email : options.contactId;
+    return this.resend.post(`/contacts/${identifier}/segments/${options.segmentId}`);
+  }
+  async remove(options) {
+    if (!options.contactId && !options.email) return {
+      data: null,
+      headers: null,
+      error: {
+        message: "Missing `id` or `email` field.",
+        statusCode: null,
+        name: "missing_required_field"
+      }
+    };
+    const identifier = options.email ? options.email : options.contactId;
+    return this.resend.delete(`/contacts/${identifier}/segments/${options.segmentId}`);
+  }
+};
+var ContactTopics = class {
+  constructor(resend2) {
+    this.resend = resend2;
+  }
+  async update(payload) {
+    if (!payload.id && !payload.email) return {
+      data: null,
+      headers: null,
+      error: {
+        message: "Missing `id` or `email` field.",
+        statusCode: null,
+        name: "missing_required_field"
+      }
+    };
+    const identifier = payload.email ? payload.email : payload.id;
+    return this.resend.patch(`/contacts/${identifier}/topics`, payload.topics);
+  }
+  async list(options) {
+    if (!options.id && !options.email) return {
+      data: null,
+      headers: null,
+      error: {
+        message: "Missing `id` or `email` field.",
+        statusCode: null,
+        name: "missing_required_field"
+      }
+    };
+    const identifier = options.email ? options.email : options.id;
+    const queryString = buildPaginationQuery(options);
+    const url = queryString ? `/contacts/${identifier}/topics?${queryString}` : `/contacts/${identifier}/topics`;
+    return this.resend.get(url);
+  }
+};
+var Contacts = class {
+  constructor(resend2) {
+    this.resend = resend2;
+    this.topics = new ContactTopics(this.resend);
+    this.segments = new ContactSegments(this.resend);
+  }
+  async create(payload, options = {}) {
+    if ("audienceId" in payload) {
+      if ("segments" in payload || "topics" in payload) return {
+        data: null,
+        headers: null,
+        error: {
+          message: "`audienceId` is deprecated, and cannot be used together with `segments` or `topics`. Use `segments` instead to add one or more segments to the new contact.",
+          statusCode: null,
+          name: "invalid_parameter"
+        }
+      };
+      return await this.resend.post(`/audiences/${payload.audienceId}/contacts`, {
+        unsubscribed: payload.unsubscribed,
+        email: payload.email,
+        first_name: payload.firstName,
+        last_name: payload.lastName,
+        properties: payload.properties
+      }, options);
+    }
+    return await this.resend.post("/contacts", {
+      unsubscribed: payload.unsubscribed,
+      email: payload.email,
+      first_name: payload.firstName,
+      last_name: payload.lastName,
+      properties: payload.properties,
+      segments: payload.segments,
+      topics: payload.topics
+    }, options);
+  }
+  async list(options = {}) {
+    const segmentId = options.segmentId ?? options.audienceId;
+    if (!segmentId) {
+      const queryString2 = buildPaginationQuery(options);
+      const url2 = queryString2 ? `/contacts?${queryString2}` : "/contacts";
+      return await this.resend.get(url2);
+    }
+    const queryString = buildPaginationQuery(options);
+    const url = queryString ? `/segments/${segmentId}/contacts?${queryString}` : `/segments/${segmentId}/contacts`;
+    return await this.resend.get(url);
+  }
+  async get(options) {
+    if (typeof options === "string") return this.resend.get(`/contacts/${options}`);
+    if (!options.id && !options.email) return {
+      data: null,
+      headers: null,
+      error: {
+        message: "Missing `id` or `email` field.",
+        statusCode: null,
+        name: "missing_required_field"
+      }
+    };
+    if (!options.audienceId) return this.resend.get(`/contacts/${options?.email ? options?.email : options?.id}`);
+    return this.resend.get(`/audiences/${options.audienceId}/contacts/${options?.email ? options?.email : options?.id}`);
+  }
+  async update(options) {
+    if (!options.id && !options.email) return {
+      data: null,
+      headers: null,
+      error: {
+        message: "Missing `id` or `email` field.",
+        statusCode: null,
+        name: "missing_required_field"
+      }
+    };
+    if (!options.audienceId) return await this.resend.patch(`/contacts/${options?.email ? options?.email : options?.id}`, {
+      unsubscribed: options.unsubscribed,
+      first_name: options.firstName,
+      last_name: options.lastName,
+      properties: options.properties
+    });
+    return await this.resend.patch(`/audiences/${options.audienceId}/contacts/${options?.email ? options?.email : options?.id}`, {
+      unsubscribed: options.unsubscribed,
+      first_name: options.firstName,
+      last_name: options.lastName,
+      properties: options.properties
+    });
+  }
+  async remove(payload) {
+    if (typeof payload === "string") return this.resend.delete(`/contacts/${payload}`);
+    if (!payload.id && !payload.email) return {
+      data: null,
+      headers: null,
+      error: {
+        message: "Missing `id` or `email` field.",
+        statusCode: null,
+        name: "missing_required_field"
+      }
+    };
+    if (!payload.audienceId) return this.resend.delete(`/contacts/${payload?.email ? payload?.email : payload?.id}`);
+    return this.resend.delete(`/audiences/${payload.audienceId}/contacts/${payload?.email ? payload?.email : payload?.id}`);
+  }
+};
+function parseDomainToApiOptions(domain) {
+  return {
+    name: domain.name,
+    region: domain.region,
+    custom_return_path: domain.customReturnPath,
+    capabilities: domain.capabilities,
+    open_tracking: domain.openTracking,
+    click_tracking: domain.clickTracking,
+    tls: domain.tls,
+    tracking_subdomain: domain.trackingSubdomain
+  };
+}
+var Domains = class {
+  constructor(resend2) {
+    this.resend = resend2;
+  }
+  async create(payload, options = {}) {
+    return await this.resend.post("/domains", parseDomainToApiOptions(payload), options);
+  }
+  async list(options = {}) {
+    const queryString = buildPaginationQuery(options);
+    const url = queryString ? `/domains?${queryString}` : "/domains";
+    return await this.resend.get(url);
+  }
+  async get(id) {
+    return await this.resend.get(`/domains/${id}`);
+  }
+  async update(payload) {
+    return await this.resend.patch(`/domains/${payload.id}`, {
+      click_tracking: payload.clickTracking,
+      open_tracking: payload.openTracking,
+      tls: payload.tls,
+      capabilities: payload.capabilities,
+      tracking_subdomain: payload.trackingSubdomain
+    });
+  }
+  async remove(id) {
+    return await this.resend.delete(`/domains/${id}`);
+  }
+  async verify(id) {
+    return await this.resend.post(`/domains/${id}/verify`);
+  }
+};
+var Attachments$1 = class {
+  constructor(resend2) {
+    this.resend = resend2;
+  }
+  async get(options) {
+    const { emailId, id } = options;
+    return await this.resend.get(`/emails/${emailId}/attachments/${id}`);
+  }
+  async list(options) {
+    const { emailId } = options;
+    const queryString = buildPaginationQuery(options);
+    const url = queryString ? `/emails/${emailId}/attachments?${queryString}` : `/emails/${emailId}/attachments`;
+    return await this.resend.get(url);
+  }
+};
+var Attachments = class {
+  constructor(resend2) {
+    this.resend = resend2;
+  }
+  async get(options) {
+    const { emailId, id } = options;
+    return await this.resend.get(`/emails/receiving/${emailId}/attachments/${id}`);
+  }
+  async list(options) {
+    const { emailId } = options;
+    const queryString = buildPaginationQuery(options);
+    const url = queryString ? `/emails/receiving/${emailId}/attachments?${queryString}` : `/emails/receiving/${emailId}/attachments`;
+    return await this.resend.get(url);
+  }
+};
+var Receiving = class {
+  constructor(resend2) {
+    this.resend = resend2;
+    this.attachments = new Attachments(resend2);
+  }
+  async get(id) {
+    return await this.resend.get(`/emails/receiving/${id}`);
+  }
+  async list(options = {}) {
+    const queryString = buildPaginationQuery(options);
+    const url = queryString ? `/emails/receiving?${queryString}` : "/emails/receiving";
+    return await this.resend.get(url);
+  }
+  async forward(options) {
+    const { emailId, to, from } = options;
+    const passthrough = options.passthrough !== false;
+    const emailResponse = await this.get(emailId);
+    if (emailResponse.error) return {
+      data: null,
+      error: emailResponse.error,
+      headers: emailResponse.headers
+    };
+    const email = emailResponse.data;
+    const originalSubject = email.subject || "(no subject)";
+    if (passthrough) return this.forwardPassthrough(email, {
+      to,
+      from,
+      subject: originalSubject
+    });
+    const forwardSubject = originalSubject.startsWith("Fwd:") ? originalSubject : `Fwd: ${originalSubject}`;
+    return this.forwardWrapped(email, {
+      to,
+      from,
+      subject: forwardSubject,
+      text: "text" in options ? options.text : void 0,
+      html: "html" in options ? options.html : void 0
+    });
+  }
+  async forwardPassthrough(email, options) {
+    const { to, from, subject } = options;
+    if (!email.raw?.download_url) return {
+      data: null,
+      error: {
+        name: "validation_error",
+        message: "Raw email content is not available for this email",
+        statusCode: 400
+      },
+      headers: null
+    };
+    const rawResponse = await fetch(email.raw.download_url);
+    if (!rawResponse.ok) return {
+      data: null,
+      error: {
+        name: "application_error",
+        message: "Failed to download raw email content",
+        statusCode: rawResponse.status
+      },
+      headers: null
+    };
+    const rawEmailContent = await rawResponse.text();
+    const parsed = await PostalMime.parse(rawEmailContent, { attachmentEncoding: "base64" });
+    const attachments = parsed.attachments.map((attachment) => {
+      const contentId = attachment.contentId ? attachment.contentId.replace(/^<|>$/g, "") : void 0;
+      return {
+        filename: attachment.filename,
+        content: attachment.content.toString(),
+        content_type: attachment.mimeType,
+        content_id: contentId || void 0
+      };
+    });
+    return await this.resend.post("/emails", {
+      from,
+      to,
+      subject,
+      text: parsed.text || void 0,
+      html: parsed.html || void 0,
+      attachments: attachments.length > 0 ? attachments : void 0
+    });
+  }
+  async forwardWrapped(email, options) {
+    const { to, from, subject, text, html } = options;
+    if (!email.raw?.download_url) return {
+      data: null,
+      error: {
+        name: "validation_error",
+        message: "Raw email content is not available for this email",
+        statusCode: 400
+      },
+      headers: null
+    };
+    const rawResponse = await fetch(email.raw.download_url);
+    if (!rawResponse.ok) return {
+      data: null,
+      error: {
+        name: "application_error",
+        message: "Failed to download raw email content",
+        statusCode: rawResponse.status
+      },
+      headers: null
+    };
+    const rawEmailContent = await rawResponse.text();
+    return await this.resend.post("/emails", {
+      from,
+      to,
+      subject,
+      text,
+      html,
+      attachments: [{
+        filename: "forwarded_message.eml",
+        content: Buffer.from(rawEmailContent).toString("base64"),
+        content_type: "message/rfc822"
+      }]
+    });
+  }
+};
+var Emails = class {
+  constructor(resend2) {
+    this.resend = resend2;
+    this.attachments = new Attachments$1(resend2);
+    this.receiving = new Receiving(resend2);
+  }
+  async send(payload, options = {}) {
+    return this.create(payload, options);
+  }
+  async create(payload, options = {}) {
+    const body = { ...payload };
+    if (payload.react) body.html = await render(payload.react);
+    return await this.resend.post("/emails", parseEmailToApiOptions(body), options);
+  }
+  async get(id) {
+    return await this.resend.get(`/emails/${id}`);
+  }
+  async list(options = {}) {
+    const queryString = buildPaginationQuery(options);
+    const url = queryString ? `/emails?${queryString}` : "/emails";
+    return await this.resend.get(url);
+  }
+  async update(payload) {
+    return await this.resend.patch(`/emails/${payload.id}`, { scheduled_at: payload.scheduledAt });
+  }
+  async cancel(id) {
+    return await this.resend.post(`/emails/${id}/cancel`);
+  }
+};
+var Events = class {
+  constructor(resend2) {
+    this.resend = resend2;
+  }
+  async send(payload) {
+    return await this.resend.post("/events/send", parseEventToApiOptions(payload));
+  }
+  async create(payload) {
+    return await this.resend.post("/events", payload);
+  }
+  async get(identifier) {
+    return await this.resend.get(`/events/${encodeURIComponent(identifier)}`);
+  }
+  async list(options = {}) {
+    const queryString = buildPaginationQuery(options);
+    const url = queryString ? `/events?${queryString}` : "/events";
+    return await this.resend.get(url);
+  }
+  async update(identifier, payload) {
+    return await this.resend.patch(`/events/${encodeURIComponent(identifier)}`, payload);
+  }
+  async remove(identifier) {
+    return await this.resend.delete(`/events/${encodeURIComponent(identifier)}`);
+  }
+};
+var Logs = class {
+  constructor(resend2) {
+    this.resend = resend2;
+  }
+  async list(options = {}) {
+    const queryString = buildPaginationQuery(options);
+    const url = queryString ? `/logs?${queryString}` : "/logs";
+    return await this.resend.get(url);
+  }
+  async get(id) {
+    return await this.resend.get(`/logs/${id}`);
+  }
+};
+var Segments = class {
+  constructor(resend2) {
+    this.resend = resend2;
+  }
+  async create(payload, options = {}) {
+    return await this.resend.post("/segments", payload, options);
+  }
+  async list(options = {}) {
+    const queryString = buildPaginationQuery(options);
+    const url = queryString ? `/segments?${queryString}` : "/segments";
+    return await this.resend.get(url);
+  }
+  async get(id) {
+    return await this.resend.get(`/segments/${id}`);
+  }
+  async remove(id) {
+    return await this.resend.delete(`/segments/${id}`);
+  }
+};
+function getPaginationQueryProperties(options = {}) {
+  const query = new URLSearchParams();
+  if (options.before) query.set("before", options.before);
+  if (options.after) query.set("after", options.after);
+  if (options.limit) query.set("limit", options.limit.toString());
+  return query.size > 0 ? `?${query.toString()}` : "";
+}
+function parseVariables(variables) {
+  return variables?.map((variable) => ({
+    key: variable.key,
+    type: variable.type,
+    fallback_value: variable.fallbackValue
+  }));
+}
+function parseTemplateToApiOptions(template) {
+  return {
+    name: "name" in template ? template.name : void 0,
+    subject: template.subject,
+    html: template.html,
+    text: template.text,
+    alias: template.alias,
+    from: template.from,
+    reply_to: template.replyTo,
+    variables: parseVariables(template.variables)
+  };
+}
+var ChainableTemplateResult = class {
+  constructor(promise, publishFn) {
+    this.promise = promise;
+    this.publishFn = publishFn;
+  }
+  then(onfulfilled, onrejected) {
+    return this.promise.then(onfulfilled, onrejected);
+  }
+  async publish() {
+    const { data, error } = await this.promise;
+    if (error) return {
+      data: null,
+      headers: null,
+      error
+    };
+    return this.publishFn(data.id);
+  }
+};
+var Templates = class {
+  constructor(resend2) {
+    this.resend = resend2;
+  }
+  create(payload) {
+    return new ChainableTemplateResult(this.performCreate(payload), this.publish.bind(this));
+  }
+  async performCreate(payload) {
+    const body = { ...payload };
+    if (payload.react) body.html = await render(payload.react);
+    return this.resend.post("/templates", parseTemplateToApiOptions(body));
+  }
+  async remove(identifier) {
+    return await this.resend.delete(`/templates/${identifier}`);
+  }
+  async get(identifier) {
+    return await this.resend.get(`/templates/${identifier}`);
+  }
+  async list(options = {}) {
+    return this.resend.get(`/templates${getPaginationQueryProperties(options)}`);
+  }
+  duplicate(identifier) {
+    return new ChainableTemplateResult(this.resend.post(`/templates/${identifier}/duplicate`), this.publish.bind(this));
+  }
+  async publish(identifier) {
+    return await this.resend.post(`/templates/${identifier}/publish`);
+  }
+  async update(identifier, payload) {
+    return await this.resend.patch(`/templates/${identifier}`, parseTemplateToApiOptions(payload));
+  }
+};
+var Topics = class {
+  constructor(resend2) {
+    this.resend = resend2;
+  }
+  async create(payload) {
+    const { defaultSubscription, ...body } = payload;
+    return await this.resend.post("/topics", {
+      ...body,
+      default_subscription: defaultSubscription
+    });
+  }
+  async list() {
+    return await this.resend.get("/topics");
+  }
+  async get(id) {
+    if (!id) return {
+      data: null,
+      headers: null,
+      error: {
+        message: "Missing `id` field.",
+        statusCode: null,
+        name: "missing_required_field"
+      }
+    };
+    return await this.resend.get(`/topics/${id}`);
+  }
+  async update(payload) {
+    if (!payload.id) return {
+      data: null,
+      headers: null,
+      error: {
+        message: "Missing `id` field.",
+        statusCode: null,
+        name: "missing_required_field"
+      }
+    };
+    return await this.resend.patch(`/topics/${payload.id}`, payload);
+  }
+  async remove(id) {
+    if (!id) return {
+      data: null,
+      headers: null,
+      error: {
+        message: "Missing `id` field.",
+        statusCode: null,
+        name: "missing_required_field"
+      }
+    };
+    return await this.resend.delete(`/topics/${id}`);
+  }
+};
+var Webhooks = class {
+  constructor(resend2) {
+    this.resend = resend2;
+  }
+  async create(payload, options = {}) {
+    return await this.resend.post("/webhooks", payload, options);
+  }
+  async get(id) {
+    return await this.resend.get(`/webhooks/${id}`);
+  }
+  async list(options = {}) {
+    const queryString = buildPaginationQuery(options);
+    const url = queryString ? `/webhooks?${queryString}` : "/webhooks";
+    return await this.resend.get(url);
+  }
+  async update(id, payload) {
+    return await this.resend.patch(`/webhooks/${id}`, payload);
+  }
+  async remove(id) {
+    return await this.resend.delete(`/webhooks/${id}`);
+  }
+  verify(payload) {
+    return new distExports.Webhook(payload.webhookSecret).verify(payload.payload, {
+      "webhook-id": payload.headers.id,
+      "webhook-timestamp": payload.headers.timestamp,
+      "webhook-signature": payload.headers.signature
+    });
+  }
+};
+const defaultBaseUrl = "https://api.resend.com";
+const defaultUserAgent = `resend-node:${version}`;
+function getDefaultBaseUrl() {
+  return typeof process !== "undefined" && process.env ? process.env.RESEND_BASE_URL || defaultBaseUrl : defaultBaseUrl;
+}
+function getDefaultUserAgent() {
+  return typeof process !== "undefined" && process.env ? process.env.RESEND_USER_AGENT || defaultUserAgent : defaultUserAgent;
+}
+var Resend = class {
+  constructor(key, options) {
+    this.key = key;
+    this.segments = new Segments(this);
+    this.apiKeys = new ApiKeys(this);
+    this.audiences = this.segments;
+    this.automations = new Automations(this);
+    this.batch = new Batch(this);
+    this.broadcasts = new Broadcasts(this);
+    this.contactProperties = new ContactProperties(this);
+    this.contacts = new Contacts(this);
+    this.domains = new Domains(this);
+    this.emails = new Emails(this);
+    this.events = new Events(this);
+    this.logs = new Logs(this);
+    this.templates = new Templates(this);
+    this.topics = new Topics(this);
+    this.webhooks = new Webhooks(this);
+    if (!key) {
+      if (typeof process !== "undefined" && process.env) this.key = process.env.RESEND_API_KEY;
+      if (!this.key) throw new Error('Missing API key. Pass it to the constructor `new Resend("re_123")`');
+    }
+    this.baseUrl = options?.baseUrl ?? getDefaultBaseUrl();
+    this.userAgent = options?.userAgent ?? getDefaultUserAgent();
+    this.headers = new Headers({
+      Authorization: `Bearer ${this.key}`,
+      "User-Agent": this.userAgent,
+      "Content-Type": "application/json"
+    });
+  }
+  async fetchRequest(path, options = {}) {
+    try {
+      const response = await fetch(`${this.baseUrl}${path}`, options);
+      if (!response.ok) try {
+        const rawError = await response.text();
+        return {
+          data: null,
+          error: JSON.parse(rawError),
+          headers: Object.fromEntries(response.headers.entries())
+        };
+      } catch (err) {
+        if (err instanceof SyntaxError) return {
+          data: null,
+          error: {
+            name: "application_error",
+            statusCode: response.status,
+            message: "Internal server error. We are unable to process your request right now, please try again later."
+          },
+          headers: Object.fromEntries(response.headers.entries())
+        };
+        const error = {
+          message: response.statusText,
+          statusCode: response.status,
+          name: "application_error"
+        };
+        if (err instanceof Error) return {
+          data: null,
+          error: {
+            ...error,
+            message: err.message
+          },
+          headers: Object.fromEntries(response.headers.entries())
+        };
+        return {
+          data: null,
+          error,
+          headers: Object.fromEntries(response.headers.entries())
+        };
+      }
+      return {
+        data: await response.json(),
+        error: null,
+        headers: Object.fromEntries(response.headers.entries())
+      };
+    } catch {
+      return {
+        data: null,
+        error: {
+          name: "application_error",
+          statusCode: null,
+          message: "Unable to fetch data. The request could not be resolved."
+        },
+        headers: null
+      };
+    }
+  }
+  async post(path, entity, options = {}) {
+    const headers = new Headers(this.headers);
+    if (options.headers) for (const [key, value] of new Headers(options.headers).entries()) headers.set(key, value);
+    if (options.idempotencyKey) headers.set("Idempotency-Key", options.idempotencyKey);
+    const requestOptions = {
+      method: "POST",
+      body: JSON.stringify(entity),
+      ...options,
+      headers
+    };
+    return this.fetchRequest(path, requestOptions);
+  }
+  async get(path, options = {}) {
+    const headers = new Headers(this.headers);
+    if (options.headers) for (const [key, value] of new Headers(options.headers).entries()) headers.set(key, value);
+    const requestOptions = {
+      method: "GET",
+      ...options,
+      headers
+    };
+    return this.fetchRequest(path, requestOptions);
+  }
+  async put(path, entity, options = {}) {
+    const headers = new Headers(this.headers);
+    if (options.headers) for (const [key, value] of new Headers(options.headers).entries()) headers.set(key, value);
+    const requestOptions = {
+      method: "PUT",
+      body: JSON.stringify(entity),
+      ...options,
+      headers
+    };
+    return this.fetchRequest(path, requestOptions);
+  }
+  async patch(path, entity, options = {}) {
+    const headers = new Headers(this.headers);
+    if (options.headers) for (const [key, value] of new Headers(options.headers).entries()) headers.set(key, value);
+    const requestOptions = {
+      method: "PATCH",
+      body: JSON.stringify(entity),
+      ...options,
+      headers
+    };
+    return this.fetchRequest(path, requestOptions);
+  }
+  async delete(path, query, options = {}) {
+    const headers = new Headers(this.headers);
+    if (options.headers) for (const [key, value] of new Headers(options.headers).entries()) headers.set(key, value);
+    const requestOptions = {
+      method: "DELETE",
+      body: query === void 0 ? void 0 : JSON.stringify(query),
+      ...options,
+      headers
+    };
+    return this.fetchRequest(path, requestOptions);
+  }
+};
+function getEnv(key, fallback = "") {
+  return process.env[key] || fallback;
+}
+const supabaseUrl = getEnv("VITE_SUPABASE_URL", "https://placeholder-project.supabase.co");
+const supabaseServiceKey = getEnv("SUPABASE_SERVICE_ROLE_KEY", getEnv("VITE_SUPABASE_ANON_KEY", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.placeholder"));
+const supabase = createClient(supabaseUrl, supabaseServiceKey);
+const resend = new Resend(getEnv("RESEND_API_KEY", "re_placeholder"));
+const submitLeadFn_createServerFn_handler = createServerRpc({
+  id: "58246c96447369cd14bbdb3fc5ccdf09f644412dbd285dd9e86b921189e9988f",
+  name: "submitLeadFn",
+  filename: "src/actions/leads.ts"
+}, (opts) => submitLeadFn.__executeServer(opts));
+const submitLeadFn = createServerFn({
+  method: "POST"
+}).validator(objectType({
+  name: stringType(),
+  phone: stringType(),
+  email: stringType(),
+  sip: stringType(),
+  current: stringType(),
+  risk_profile: stringType().optional().default("Standard"),
+  fund: stringType().optional()
+})).handler(submitLeadFn_createServerFn_handler, async ({
+  data
+}) => {
+  try {
+    const {
+      data: lead,
+      error
+    } = await supabase.from("leads").insert([{
+      name: data.name,
+      phone: data.phone,
+      email: data.email,
+      sip_amount: data.sip,
+      risk_profile: data.risk_profile || "Standard",
+      status: "new",
+      meeting_booked: false
+    }]).select().single();
+    if (error) {
+      console.error("Supabase insert error:", error);
+      throw new Error("Failed to save lead");
+    }
+    const adminEmail = getEnv("ADMIN_EMAIL", "admin@shrinivesh.com");
+    const fromEmail = getEnv("RESEND_FROM_EMAIL", "onboarding@resend.dev");
+    await resend.emails.send({
+      from: `ShriNivesh Leads <${fromEmail}>`,
+      to: adminEmail,
+      subject: `New Lead: ${data.name}`,
+      html: `
+          <h2>New Lead Received</h2>
+          <p><strong>Name:</strong> ${data.name}</p>
+          <p><strong>Phone:</strong> ${data.phone}</p>
+          <p><strong>Email:</strong> ${data.email}</p>
+          <p><strong>SIP Capacity:</strong> ${data.sip}</p>
+          <p><strong>Current Investment:</strong> ${data.current}</p>
+          <p><strong>Fund Interest:</strong> ${data.fund}</p>
+        `
+    });
+    return {
+      success: true,
+      leadId: lead?.id
+    };
+  } catch (err) {
+    console.error("Error processing lead:", err);
+    return {
+      success: false,
+      error: "Internal server error"
+    };
+  }
+});
+const updateLeadMeetingStatusFn_createServerFn_handler = createServerRpc({
+  id: "2346c51317ba750c0f51204e37e36732bec350fb086a2756d91ce75e1e92b34b",
+  name: "updateLeadMeetingStatusFn",
+  filename: "src/actions/leads.ts"
+}, (opts) => updateLeadMeetingStatusFn.__executeServer(opts));
+const updateLeadMeetingStatusFn = createServerFn({
+  method: "POST"
+}).validator(objectType({
+  leadId: stringType(),
+  booked: booleanType(),
+  calendlyLink: stringType().optional()
+})).handler(updateLeadMeetingStatusFn_createServerFn_handler, async ({
+  data
+}) => {
+  const {
+    error
+  } = await supabase.from("leads").update({
+    meeting_booked: data.booked,
+    calendly_booking_link: data.calendlyLink,
+    status: data.booked ? "meeting_scheduled" : "new"
+  }).eq("id", data.leadId);
+  if (error) {
+    console.error("Failed to update meeting status:", error);
+    return {
+      success: false
+    };
+  }
+  return {
+    success: true
+  };
+});
+const updateLeadMeetingTimeFn_createServerFn_handler = createServerRpc({
+  id: "a3e45626a601ff6747ab859b35ede6c725f5e3da308fde360bba11b6e913c831",
+  name: "updateLeadMeetingTimeFn",
+  filename: "src/actions/leads.ts"
+}, (opts) => updateLeadMeetingTimeFn.__executeServer(opts));
+const updateLeadMeetingTimeFn = createServerFn({
+  method: "POST"
+}).validator(objectType({
+  leadId: stringType(),
+  meetingTime: stringType().nullable()
+})).handler(updateLeadMeetingTimeFn_createServerFn_handler, async ({
+  data
+}) => {
+  const {
+    error
+  } = await supabase.from("leads").update({
+    meeting_time: data.meetingTime
+  }).eq("id", data.leadId);
+  if (error) {
+    console.error("Failed to update meeting time:", error);
+    return {
+      success: false
+    };
+  }
+  return {
+    success: true
+  };
+});
+const deleteLeadFn_createServerFn_handler = createServerRpc({
+  id: "7106cd2d8ff83a816dfba4784a53b72a2abad6b04b9c25062ea19a1121e68d27",
+  name: "deleteLeadFn",
+  filename: "src/actions/leads.ts"
+}, (opts) => deleteLeadFn.__executeServer(opts));
+const deleteLeadFn = createServerFn({
+  method: "POST"
+}).validator(objectType({
+  leadId: stringType()
+})).handler(deleteLeadFn_createServerFn_handler, async ({
+  data
+}) => {
+  const {
+    error
+  } = await supabase.from("leads").delete().eq("id", data.leadId);
+  if (error) {
+    console.error("Failed to delete lead:", error);
+    return {
+      success: false
+    };
+  }
+  return {
+    success: true
+  };
+});
 export {
-  PostalMime as P
+  deleteLeadFn_createServerFn_handler,
+  submitLeadFn_createServerFn_handler,
+  updateLeadMeetingStatusFn_createServerFn_handler,
+  updateLeadMeetingTimeFn_createServerFn_handler
 };

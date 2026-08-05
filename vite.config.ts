@@ -17,7 +17,7 @@ export default defineConfig({
   },
   vite: {
     ssr: {
-      noExternal: ["tslib", "@supabase/supabase-js", "@supabase/auth-js"],
+      noExternal: true,
     },
   },
   nitro: {
